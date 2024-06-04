@@ -1,7 +1,7 @@
 "use client";
 import { signIn } from "next-auth/react";
 
-export default function LoginView() {
+export const LoginView = () => {
 	return (
 		<div className="w-full pt-8 text-center">
 			<button
@@ -13,4 +13,4 @@ export default function LoginView() {
 			</button>
 		</div>
 	);
-}
+};

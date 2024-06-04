@@ -1,7 +1,7 @@
 "use client";
 
 import { type Card, useMutation, useStorage } from "@/app/liveblocks.config";
-import { NewCardForm } from "@/components";
+import { CancelButton, Card as ColumnCard, NewCardForm } from "@/components";
 import {
 	faClose,
 	faEllipsis,
@@ -34,6 +34,12 @@ export function Column({ id, name }: ColumnProps) {
 				card?.set(key as keyof Card, updateData[key]);
 			}
 		}
+	}, []);
+
+	const deleteColumn = useMutation(({ storage }, id) => {
+		const columns = storage.get("columns");
+		const columnIndex = columns.findIndex((c) => c.toObject().id === id);
+		columns.delete(columnIndex);
 	}, []);
 
 	const setCardsOrderForColumn = useMutation(
@@ -74,8 +80,8 @@ export function Column({ id, name }: ColumnProps) {
 		<div className="w-48 bg-white shadow-sm rounded-md p-2">
 			{!renameMode && (
 				<div className="flex justify-between">
-					<h3 onClick={() => setRenameMode(true)}>{name}</h3>
-					<button className="text-gray-300">
+					<h3>{name}</h3>
+					<button onClick={() => setRenameMode(true)} className="text-gray-300">
 						<FontAwesomeIcon icon={faEllipsis} />
 					</button>
 				</div>
@@ -89,17 +95,14 @@ export function Column({ id, name }: ColumnProps) {
 							Save
 						</button>
 					</form>
-					<button className="bg-red-500 text-white p-2 flex gap-2 w-full items-center rounded-md justify-center">
+					<button
+						onClick={() => deleteColumn(id)}
+						className="bg-red-500 text-white p-2 flex gap-2 w-full items-center rounded-md justify-center"
+					>
 						<FontAwesomeIcon icon={faTrash} />
 						Delete column
 					</button>
-					<button
-						onClick={() => setRenameMode(false)}
-						className="w-full mt-4 gap-2 flex justify-center items-center uppercase text-sm  text-gray-400"
-					>
-						<FontAwesomeIcon icon={faClose} />
-						Cancel
-					</button>
+					<CancelButton onClick={() => setRenameMode(false)} />
 				</div>
 			)}
 			{!renameMode && columnCards && (
@@ -111,9 +114,7 @@ export function Column({ id, name }: ColumnProps) {
 					ghostClass="opacity-40"
 				>
 					{columnCards.map((card) => (
-						<div key={card.id} className="border bg-white my-2 p-4 rounded-md">
-							<span>{card.name}</span>
-						</div>
+						<ColumnCard key={card.id} {...card} />
 					))}
 				</ReactSortable>
 			)}

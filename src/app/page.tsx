@@ -1,5 +1,5 @@
-import { Board, Boards } from "@/components";
-import LoginView from "@/components/views/LoginView";
+import { Boards } from "@/components";
+import { LoginView } from "@/components/";
 import { authOptions } from "@/lib/authOptions";
 import { faArrowRight } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
