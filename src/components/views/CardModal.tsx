@@ -7,7 +7,12 @@ import { type Card, useMutation, useStorage } from "@/app/liveblocks.config";
 import { shallow } from "@liveblocks/core";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faEllipsis } from "@fortawesome/free-solid-svg-icons";
-import { CancelButton, DeleteWithConfirmation } from "@/components";
+import { faFileLines } from "@fortawesome/free-regular-svg-icons";
+import {
+	CancelButton,
+	CardDescription,
+	DeleteWithConfirmation,
+} from "@/components";
 
 export const CardModal = () => {
 	const router = useRouter();
@@ -70,7 +75,7 @@ export const CardModal = () => {
 			>
 				{!editMode && (
 					<div className="flex justify-between">
-						<h4>{card?.name}</h4>
+						<h4 className="text-lg">{card?.name}</h4>
 						<button
 							className=" text-gray-400"
 							onClick={() => setEditMode(true)}
@@ -91,6 +96,15 @@ export const CardModal = () => {
 							<DeleteWithConfirmation onDelete={() => handleDelete()} />
 						</div>
 						<CancelButton onClick={() => setEditMode(false)} />
+					</div>
+				)}
+				{!editMode && (
+					<div>
+						<h2 className="flex gap-2 items-center mt-4">
+							<FontAwesomeIcon icon={faFileLines} />
+							Description
+						</h2>
+						<CardDescription />
 					</div>
 				)}
 			</div>
