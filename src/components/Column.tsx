@@ -81,7 +81,10 @@ export function Column({ id, name }: ColumnProps) {
 			{!renameMode && (
 				<div className="flex justify-between">
 					<h3>{name}</h3>
-					<button onClick={() => setRenameMode(true)} className="text-gray-300">
+					<button
+						onClick={() => setRenameMode(true)}
+						className="text-gray-300 hover:text-gray-600"
+					>
 						<FontAwesomeIcon icon={faEllipsis} />
 					</button>
 				</div>
@@ -97,7 +100,7 @@ export function Column({ id, name }: ColumnProps) {
 					</form>
 					<button
 						onClick={() => deleteColumn(id)}
-						className="bg-red-500 text-white p-2 flex gap-2 w-full items-center rounded-md justify-center"
+						className="bg-red-500 text-white p-2 flex gap-2 w-full items-center rounded-md justify-center hover:bg-red-800 "
 					>
 						<FontAwesomeIcon icon={faTrash} />
 						Delete column

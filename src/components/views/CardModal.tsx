@@ -75,9 +75,9 @@ export const CardModal = () => {
 			>
 				{!editMode && (
 					<div className="flex justify-between">
-						<h4 className="text-lg">{card?.name}</h4>
+						<h4 className="text-2xl">{card?.name}</h4>
 						<button
-							className=" text-gray-400"
+							className=" text-gray-400 hover:text-gray-600"
 							onClick={() => setEditMode(true)}
 						>
 							<FontAwesomeIcon icon={faEllipsis} />

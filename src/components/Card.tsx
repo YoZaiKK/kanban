@@ -29,7 +29,7 @@ export const Card = ({ id, name }: CardProps) => {
 	return (
 		<Link
 			href={`/boards/${params.boardId}/cards/${id}`}
-			className="border block bg-white my-2 p-4 rounded-md"
+			className="border block bg-white my-2 p-4 rounded-md hover:shadow-lg hover:transition-shadow duration-200"
 		>
 			<span>{name}</span>
 		</Link>

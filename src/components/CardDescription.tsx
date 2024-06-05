@@ -31,9 +31,17 @@ export const CardDescription = () => {
 		};
 	}, [room]);
 
+	if (!doc || !provider) {
+		return null;
+	}
+
 	return (
 		<div>
-			<DescriptionEditor doc={doc} provider={provider} cardId={cardId} />
+			<DescriptionEditor
+				doc={doc}
+				provider={provider}
+				cardId={cardId.toString()}
+			/>
 		</div>
 	);
 };

@@ -5,7 +5,7 @@ export const CancelButton = ({ onClick }: { onClick: () => void }) => {
 	return (
 		<button
 			onClick={onClick}
-			className="w-full mt-4 gap-2 flex justify-center items-center uppercase text-sm  text-gray-400"
+			className="w-full mt-4 gap-2 flex justify-center items-center uppercase text-sm  text-gray-400 hover:text-gray-600"
 		>
 			<FontAwesomeIcon icon={faClose} />
 			Cancel edit

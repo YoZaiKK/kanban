@@ -63,10 +63,13 @@ export function Board({ id, name }: { id: string; name: string }) {
 									)}
 								</div>
 								<Link
-									className="flex gap-2 items-center btn"
+									className="flex gap-2 items-center btn hover:bg-gray-100 p-2 rounded-md"
 									href={`/boards/${id}/settings`}
 								>
-									<FontAwesomeIcon icon={faCog} />
+									<FontAwesomeIcon
+										icon={faCog}
+										className="transform transition-transform duration-300 group-hover:rotate-45"
+									/>
 									Board settings
 								</Link>
 							</div>

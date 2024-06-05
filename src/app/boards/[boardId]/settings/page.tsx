@@ -27,7 +27,7 @@ export default async function BoardSettings({ params }: PageProps) {
 		<div>
 			<div className="flex justify-between">
 				<Link
-					className="inline-flex gap-1 items-center btn mb-4"
+					className="inline-flex gap-1 items-center btn mb-4 hover:shadow-md hover:transition-shadow duration-300 rounded-md p-2"
 					href={`/boards/${boardId}`}
 				>
 					<FontAwesomeIcon icon={faArrowLeft} />

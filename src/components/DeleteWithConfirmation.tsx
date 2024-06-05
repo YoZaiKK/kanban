@@ -26,7 +26,7 @@ export const DeleteWithConfirmation = ({ onDelete }: Props) => {
 						</button>
 					</div>
 					<div>
-						<button onClick={onDelete} className="w-full btn red with-icon">
+						<button onClick={onDelete} className="w-full btn red with-icon ">
 							Yes, delete!
 						</button>
 					</div>
@@ -37,7 +37,7 @@ export const DeleteWithConfirmation = ({ onDelete }: Props) => {
 	return (
 		<button
 			onClick={() => setWannaDelete(true)}
-			className="bg-red-500 text-white p-2 w-full justify-center items-center flex gap-2 rounded-md"
+			className="bg-red-500 text-white p-2 w-full justify-center items-center flex gap-2 rounded-md hover:bg-red-800"
 		>
 			<FontAwesomeIcon icon={faTrash} />
 			Delete

@@ -29,7 +29,10 @@ export const EmailsAccessList = ({
 					className="flex gap-2 my-2 items-center max-w-xs justify-between border rounded-lg pl-4"
 				>
 					{email}
-					<button className="btn p-1" onClick={() => handleDelete(email)}>
+					<button
+						className="btn p-2 hover:bg-red-500 duration-75 hover:text-white rounded-md"
+						onClick={() => handleDelete(email)}
+					>
 						<FontAwesomeIcon icon={faTrash} />
 					</button>
 				</div>

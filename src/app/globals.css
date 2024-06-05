@@ -15,7 +15,7 @@ button.primary,
 
 button[type="submit"],
 .primary {
-	@apply bg-blue-500 text-white;
+	@apply bg-blue-500 text-white hover:bg-blue-800;
 }
 
 input[type="text"] {
@@ -23,10 +23,60 @@ input[type="text"] {
 }
 
 button.btn.red {
-	@apply bg-red-500 text-white;
+	@apply bg-red-500 text-white hover:bg-red-800;
 }
 
 .btn.with-icon,
 button.with-icon {
 	@apply flex gap-2 items-center justify-center;
+}
+
+.collaboration-cursor__caret {
+	border-left: 1px solid #0d0d0d;
+	border-right: 1px solid #0d0d0d;
+	margin-left: -1px;
+	margin-right: -1px;
+	pointer-events: none;
+	position: relative;
+	word-break: normal;
+}
+
+.collaboration-cursor__label {
+	font-style: normal;
+	font-weight: 600;
+	left: -1px;
+	line-height: normal;
+	position: absolute;
+	-webkit-user-select: none;
+	user-select: none;
+	white-space: nowrap;
+	font-size: 14px;
+	color: #fff;
+	top: -1.4em;
+	border-radius: 6px;
+	border-bottom-left-radius: 0;
+	padding: 2px 6px;
+	pointer-events: none;
+}
+
+.editor-buttons {
+	button {
+		@apply shadow rounded-md p-1 text-sm py-1 px-2 hover:bg-gray-100;
+	}
+
+	button.active {
+		@apply bg-gray-200 hover:bg-gray-100;
+	}
+}
+
+.tiptap {
+	@apply p-2 border rounded-md;
+	&:focus-visible {
+		outline: 0;
+		@apply border-blue-500;
+	}
+
+	h2 {
+		@apply text-2xl;
+	}
 }
