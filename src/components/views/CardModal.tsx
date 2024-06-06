@@ -3,22 +3,36 @@
 import { useParams, useRouter } from "next/navigation";
 import { FormEvent, useContext, useEffect, useState } from "react";
 import { BoardContext, BoardContextProps } from "../BoardContext";
-import { type Card, useMutation, useStorage } from "@/app/liveblocks.config";
+import {
+	type Card,
+	useMutation,
+	useStorage,
+	useThreads,
+} from "@/app/liveblocks.config";
 import { shallow } from "@liveblocks/core";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { Composer, Thread } from "@liveblocks/react-comments";
 import { faEllipsis } from "@fortawesome/free-solid-svg-icons";
-import { faFileLines } from "@fortawesome/free-regular-svg-icons";
+import { faComments, faFileLines } from "@fortawesome/free-regular-svg-icons";
 import {
 	CancelButton,
 	CardDescription,
 	DeleteWithConfirmation,
 } from "@/components";
+import "@liveblocks/react-comments/styles.css";
 
 export const CardModal = () => {
 	const router = useRouter();
 	const params = useParams();
 	const { setOpenCard } = useContext<BoardContextProps>(BoardContext);
 	const [editMode, setEditMode] = useState(false);
+	const { threads } = useThreads({
+		query: {
+			metadata: {
+				cardId: params.cardId.toString(),
+			},
+		},
+	});
 
 	const card = useStorage(
 		(root) => root.cards.find((card) => card.id === params.cardId),
@@ -29,6 +43,7 @@ export const CardModal = () => {
 		const cards = storage.get("cards").map((c) => c.toObject());
 		const index = cards.findIndex((card) => card.id === cardId);
 		const card = storage.get("cards").get(index);
+
 		for (let updateKey in updateData) {
 			card?.set(updateKey as keyof Card, updateData[updateKey]);
 		}
@@ -70,7 +85,7 @@ export const CardModal = () => {
 	return (
 		<div className="fixed inset-0 bg-black/70" onClick={handleBackdropClick}>
 			<div
-				className="bg-white p-4 mt-8 max-w-xs mx-auto rounded-md "
+				className="bg-white px-4 py-4 pb-1 mt-8 max-w-sm mx-auto rounded-md "
 				onClick={(ev) => ev.stopPropagation()}
 			>
 				{!editMode && (
@@ -105,6 +120,24 @@ export const CardModal = () => {
 							Description
 						</h2>
 						<CardDescription />
+						<h2 className="flex gap-2 items-center mt-4">
+							<FontAwesomeIcon icon={faComments} />
+							Comments
+						</h2>
+
+						<div className="-mx-4">
+							{threads &&
+								threads.map((thread) => (
+									<div key={thread.id}>
+										<Thread thread={thread} id={thread.id} />
+									</div>
+								))}
+							{threads?.length === 0 && (
+								<div>
+									<Composer metadata={{ cardId: params.cardId.toString() }} />
+								</div>
+							)}
+						</div>
 					</div>
 				)}
 			</div>
