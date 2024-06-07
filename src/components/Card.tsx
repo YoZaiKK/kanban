@@ -2,7 +2,7 @@
 import Link from "next/link";
 import { useParams, useRouter } from "next/navigation";
 import { useContext, useEffect } from "react";
-import { BoardContext } from "@/components";
+import { BoardContext, PresenceAvatars } from "@/components";
 
 type CardProps = {
 	id: string;
@@ -29,9 +29,12 @@ export const Card = ({ id, name }: CardProps) => {
 	return (
 		<Link
 			href={`/boards/${params.boardId}/cards/${id}`}
-			className="border block bg-white my-2 p-4 rounded-md hover:shadow-lg hover:transition-shadow duration-200"
+			className="relative border block bg-white my-2 py-8 px-4 rounded-md hover:shadow-lg hover:transition-shadow duration-200"
 		>
 			<span>{name}</span>
+			<div className="absolute bottom-1 right-1">
+				<PresenceAvatars presenceKey="cardId" presenceValue={id} />
+			</div>
 		</Link>
 	);
 };

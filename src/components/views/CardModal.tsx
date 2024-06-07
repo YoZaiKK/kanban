@@ -1,146 +1,46 @@
 "use client";
 
 import { useParams, useRouter } from "next/navigation";
-import { FormEvent, useContext, useEffect, useState } from "react";
-import { BoardContext, BoardContextProps } from "../BoardContext";
-import {
-	type Card,
-	useMutation,
-	useStorage,
-	useThreads,
-} from "@/app/liveblocks.config";
-import { shallow } from "@liveblocks/core";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { Composer, Thread } from "@liveblocks/react-comments";
-import { faEllipsis } from "@fortawesome/free-solid-svg-icons";
-import { faComments, faFileLines } from "@fortawesome/free-regular-svg-icons";
-import {
-	CancelButton,
-	CardDescription,
-	DeleteWithConfirmation,
-} from "@/components";
 import "@liveblocks/react-comments/styles.css";
+import { CardModalBody } from "../CardModalBody";
+import { useEffect } from "react";
+import { useUpdateMyPresence } from "@/app/liveblocks.config";
 
 export const CardModal = () => {
 	const router = useRouter();
 	const params = useParams();
-	const { setOpenCard } = useContext<BoardContextProps>(BoardContext);
-	const [editMode, setEditMode] = useState(false);
-	const { threads } = useThreads({
-		query: {
-			metadata: {
-				cardId: params.cardId.toString(),
-			},
-		},
-	});
-
-	const card = useStorage(
-		(root) => root.cards.find((card) => card.id === params.cardId),
-		shallow
-	);
-
-	const updateCard = useMutation(({ storage }, cardId, updateData) => {
-		const cards = storage.get("cards").map((c) => c.toObject());
-		const index = cards.findIndex((card) => card.id === cardId);
-		const card = storage.get("cards").get(index);
-
-		for (let updateKey in updateData) {
-			card?.set(updateKey as keyof Card, updateData[updateKey]);
-		}
-	}, []);
-
-	const deleteCard = useMutation(({ storage }, id) => {
-		const cards = storage.get("cards");
-		const cardIndex = cards.findIndex((c) => c.toObject().id === id);
-		cards.delete(cardIndex);
-	}, []);
-
-	useEffect(() => {
-		if (params.cardId && setOpenCard) {
-			setOpenCard(params.cardId.toString());
-		}
-	}, [params]);
-
-	function handleDelete() {
-		deleteCard(params.cardId);
-		if (!setOpenCard) return;
-		setOpenCard(null);
-		router.back();
-	}
+	const updateMyPresence = useUpdateMyPresence();
 
 	function handleBackdropClick() {
 		router.back();
 	}
 
-	function handleNameChange(ev: FormEvent) {
-		ev.preventDefault();
-
-		const input = (ev.target as HTMLFormElement).querySelector("input");
-		if (!input) return;
-		const newName = input.value;
-		updateCard(params.cardId, { name: newName });
-		setEditMode(false);
-	}
+	useEffect(() => {
+		if (params.cardId) {
+			updateMyPresence({ cardId: params.cardId.toString() });
+		}
+	}, [params]);
 
 	return (
-		<div className="fixed inset-0 bg-black/70" onClick={handleBackdropClick}>
+		<>
 			<div
-				className="bg-white px-4 py-4 pb-1 mt-8 max-w-sm mx-auto rounded-md "
-				onClick={(ev) => ev.stopPropagation()}
-			>
-				{!editMode && (
-					<div className="flex justify-between">
-						<h4 className="text-2xl">{card?.name}</h4>
-						<button
-							className=" text-gray-400 hover:text-gray-600"
-							onClick={() => setEditMode(true)}
-						>
-							<FontAwesomeIcon icon={faEllipsis} />
-						</button>
-					</div>
-				)}
-				{editMode && (
-					<div>
-						<form action="" onSubmit={handleNameChange}>
-							<input type="text" defaultValue={card?.name} className="mb-2" />
-							<button type="submit" className=" w-full">
-								Save
-							</button>
-						</form>
-						<div className="mt-2">
-							<DeleteWithConfirmation onDelete={() => handleDelete()} />
-						</div>
-						<CancelButton onClick={() => setEditMode(false)} />
-					</div>
-				)}
-				{!editMode && (
-					<div>
-						<h2 className="flex gap-2 items-center mt-4">
-							<FontAwesomeIcon icon={faFileLines} />
-							Description
-						</h2>
-						<CardDescription />
-						<h2 className="flex gap-2 items-center mt-4">
-							<FontAwesomeIcon icon={faComments} />
-							Comments
-						</h2>
+				className="fixed inset-0 bg-black/70 z-10"
+				onClick={handleBackdropClick}
+			></div>
 
-						<div className="-mx-4">
-							{threads &&
-								threads.map((thread) => (
-									<div key={thread.id}>
-										<Thread thread={thread} id={thread.id} />
-									</div>
-								))}
-							{threads?.length === 0 && (
-								<div>
-									<Composer metadata={{ cardId: params.cardId.toString() }} />
-								</div>
-							)}
+			<div
+				className="absolute inset-0 z-20 w-full"
+				onClick={handleBackdropClick}
+			>
+				<div className="">
+					<div className="bg-white px-4 p-1 my-8 max-w-sm mx-auto rounded-md ">
+						<div onClick={(ev) => ev.stopPropagation()}>
+							<CardModalBody />
 						</div>
 					</div>
-				)}
+					<div>&nbsp;</div>
+				</div>
 			</div>
-		</div>
+		</>
 	);
 };

@@ -9,18 +9,33 @@ export async function GET(req: NextRequest) {
   if (!connectionString) {
     return new Response("MONGODB_URI is not set", { status: 401 })
   }
+  await mongoose.connect(connectionString)
 
-  if (!url.searchParams.has("id")) {
-    return Response.json([])
+  let users = []
+
+  if (url.searchParams.get("ids")) {
+    const emails = url.searchParams.get("ids")?.split(",")
+    users = await User.find({ email: { $in: emails } })
   }
 
-  const emails = url.searchParams.getAll("id")
-  await mongoose.connect(connectionString)
-  const users = await User.find({ email: emails })
+  if (url.toString().includes("?search=")) {
+    const searchPrase = url.searchParams.get("search")
+    const searchRegex = `.*${searchPrase}.*`
+    users = await User.find({
+      $or: [
+        { name: { $regex: searchRegex } },
+        { email: { $regex: searchRegex } }
+      ]
+
+    }
+    )
+  }
+
   return Response.json(users.map((u: UserType) => ({
     id: u.email,
     name: u.name,
-    image: u.image
+    image: u.image,
+    avatar: u.image
   })))
 
 }

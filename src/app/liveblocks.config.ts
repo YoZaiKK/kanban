@@ -6,15 +6,23 @@ const client = createClient({
   authEndpoint: '/api/liveblocks-auth',
   throttle: 100,
   resolveUsers: async ({ userIds }) => {
-    const params = new URLSearchParams(userIds.map((id) => ['id', id]));
-    const response = await fetch('/api/users?' + params.toString());
+    // const params = new URLSearchParams(userIds.map((id) => ['id', id]));
+    const response = await fetch('/api/users?ids=' + userIds.join(','));
     return await response.json();
+  },
+
+  resolveMentionSuggestions: async ({ text }) => {
+    const response = await fetch(`/api/users?search=${text}`);
+    const users = await response.json();
+    return users.map((u: UserMeta) => (u.id));
+
   }
 })
 
 
-type Presence = {
-
+export type Presence = {
+  boardId?: null | string;
+  cardId?: null | string;
 }
 
 export type Column = {
@@ -59,6 +67,7 @@ export const {
   useRoom,
   useSelf,
   useOthers,
+  useUpdateMyPresence,
   useThreads,
 } = createRoomContext<
   Presence,

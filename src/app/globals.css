@@ -79,3 +79,7 @@ button.with-icon {
 		@apply text-2xl;
 	}
 }
+
+.lb-portal {
+	z-index: 30;
+}
