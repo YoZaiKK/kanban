@@ -19,6 +19,9 @@ export const CardModal = () => {
 		if (params.cardId) {
 			updateMyPresence({ cardId: params.cardId.toString() });
 		}
+		return () => {
+			updateMyPresence({ cardId: null });
+		};
 	}, [params]);
 
 	return (
