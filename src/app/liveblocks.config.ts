@@ -1,5 +1,5 @@
 import { LiveList, LiveObject, createClient } from "@liveblocks/client"
-import { createRoomContext } from "@liveblocks/react"
+import { createLiveblocksContext, createRoomContext } from "@liveblocks/react"
 
 
 const client = createClient({
@@ -79,3 +79,6 @@ export const {
   RoomEvent,
   ThreadMetadata
 >(client)
+
+export const { LiveblocksProvider, useInboxNotifications, useUnreadInboxNotificationsCount } =
+  createLiveblocksContext(client);

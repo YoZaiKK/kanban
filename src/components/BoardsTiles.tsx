@@ -32,7 +32,7 @@ export const BoardsTiles = ({ boards }: { boards: RoomInfo[] }) => {
 			<div className="my-4 grid grid-cols-1 gap-2">
 				{boards?.length > 0 &&
 					boards.map((board) => (
-						<>
+						<div key={board.id}>
 							<Card
 								isPressable
 								onPress={() => router.push(`/boards/${board.id}`)}
@@ -69,7 +69,7 @@ export const BoardsTiles = ({ boards }: { boards: RoomInfo[] }) => {
 										</div>
 									</div>
 								</CardBody>
-								<CardFooter className="flex justify-end">
+								<CardFooter className="flex justify-between">
 									<Button
 										className="
 							 bg-red-500 text-white p-2 rounded-md hover:bg-red-600 duration-300 hover:shadow-lg 
@@ -80,9 +80,17 @@ export const BoardsTiles = ({ boards }: { boards: RoomInfo[] }) => {
 									>
 										<FontAwesomeIcon icon={faTrash} />
 									</Button>
+									<RoomProvider id={board.id} initialPresence={{}}>
+										<div className="absolute bottom-1 right-1">
+											<PresenceAvatars
+												presenceKey="boardId"
+												presenceValue={board.id}
+											/>
+										</div>
+									</RoomProvider>
 								</CardFooter>
 							</Card>
-						</>
+						</div>
 					))}
 			</div>
 		</>

@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import "./globals.css";
 import { Header } from "@/components";
 import { Providers } from "./providers";
+import { LiveblocksProvider } from "./liveblocks.config";
 
 export const metadata: Metadata = {
 	title: "Create Next App",

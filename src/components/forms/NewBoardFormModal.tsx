@@ -14,7 +14,6 @@ import {
 	Switch,
 } from "@nextui-org/react";
 import { redirect } from "next/navigation";
-import { useRouter } from "next/router";
 import { useState } from "react";
 
 export const NewBoardFormModal = () => {

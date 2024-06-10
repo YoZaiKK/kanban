@@ -11,6 +11,8 @@ import { Tooltip } from "@nextui-org/tooltip";
 
 export function NewColumnForm() {
 	const [addNewColumn, setAddNewColumn] = useState(false);
+	const [inputValue, setInputValue] = useState("");
+	const [limitInput, setLimitInput] = useState("");
 
 	const addColumn = useMutation(({ storage }, columnName, limitInput) => {
 		storage.get("columns").push(
@@ -46,12 +48,7 @@ export function NewColumnForm() {
 					onClick={() => setAddNewColumn(true)}
 					className="bg-thirdColor text-forthColor rounded-md hover:bg-primaryColor  transition-colors items-center justify-center flex p-2 w-10 h-10 mt-4"
 				>
-					<Tooltip
-						content="Create board"
-						closeDelay={3000}
-						defaultOpen
-						placement="top-end"
-					>
+					<Tooltip content="Create board" defaultOpen placement="top-end">
 						<FontAwesomeIcon icon={faPlus} className="h-4 w-4 p-2" />
 					</Tooltip>
 				</button>
@@ -65,17 +62,25 @@ export function NewColumnForm() {
 								type="text"
 								className="w-full h-auto border border-gray-300 rounded-md p-2 focus:outline-none focus:border-primaryColor transition-colors"
 								placeholder="new column name"
+								value={inputValue}
+								onChange={(e) => setInputValue(e.target.value)}
 							/>
-							{/* input for the card limit per user */}
 							<input
 								type="number"
 								className="w-20 h-auto border border-gray-300 rounded-md p-2 focus:outline-none focus:border-primaryColor transition-colors"
 								placeholder="limit"
+								value={limitInput}
+								onChange={(e) => setLimitInput(e.target.value)}
 							/>
 
 							<button
 								type="submit"
-								className="bg-thirdColor text-forthColor rounded-md hover:bg-primaryColor  transition-colors items-center justify-center flex p-2 w-10 h-10"
+								className={
+									inputValue === "" || limitInput === ""
+										? "bg-gray-300 text-gray-600 rounded-md border-1 flex p-2 w-10 h-10 items-center justify-center"
+										: "bg-thirdColor text-forthColor rounded-md hover:bg-primaryColor  transition-colors items-center justify-center flex p-2 w-10 h-10"
+								}
+								disabled={inputValue === "" || limitInput === ""}
 							>
 								<FontAwesomeIcon icon={faPlus} className="h-4 w-4 p-2" />
 							</button>

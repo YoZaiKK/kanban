@@ -477,7 +477,7 @@
     "@react-aria/interactions" "3.21.1"
     "@react-aria/utils" "3.23.2"
 
-"@nextui-org/badge@2.0.28":
+"@nextui-org/badge@2.0.28", "@nextui-org/badge@^2.0.28":
   version "2.0.28"
   resolved "https://registry.yarnpkg.com/@nextui-org/badge/-/badge-2.0.28.tgz#f5331132f4110f03c9be87046b6b26eef96d78f1"
   integrity sha512-W0Anc+4VL675fai9xBhTxBp08pfzhAHch7zmP4fsRvlGQZyKAzI16clzhTt9KdOaLBq3hCIQIdCs3cwl1NsSPg==
@@ -945,7 +945,7 @@
     "@nextui-org/shared-utils" "2.0.5"
     "@nextui-org/use-data-scroll-overflow" "2.1.4"
 
-"@nextui-org/select@2.2.1":
+"@nextui-org/select@2.2.1", "@nextui-org/select@^2.2.1":
   version "2.2.1"
   resolved "https://registry.yarnpkg.com/@nextui-org/select/-/select-2.2.1.tgz#8968907baf4d073000e5163cf8a091aa8762189f"
   integrity sha512-lLEL42tS7Be1VpxTyF02lrVukqLsiqx4whF93nMwdPoHiHghgygtzqHR2KPsRUi4Cx5bEhHWR8+yCOFM2fmCFg==

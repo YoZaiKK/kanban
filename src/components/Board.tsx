@@ -1,8 +1,8 @@
 "use client";
 
 import {
-	Column,
 	RoomProvider,
+	useSelf,
 	useUpdateMyPresence,
 } from "@/app/liveblocks.config";
 import { LiveList } from "@liveblocks/client";
@@ -10,31 +10,19 @@ import { ClientSideSuspense } from "@liveblocks/react";
 import { Columns } from "./Columns";
 import Link from "next/link";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import {
-	faArrowUpWideShort,
-	faBars,
-	faCog,
-	faPen,
-} from "@fortawesome/free-solid-svg-icons";
+import { faArrowUpWideShort, faBars } from "@fortawesome/free-solid-svg-icons";
 import { FormEvent, useEffect, useState } from "react";
 import { updateBoard } from "@/app/actions/boardActions";
 import { useRouter } from "next/navigation";
 import { BoardContextProvider } from "./BoardContext";
 import { faPenToSquare } from "@fortawesome/free-regular-svg-icons";
 
-export function Board({
-	id,
-	name,
-	limitPerUser,
-}: {
-	id: string;
-	name: string;
-	limitPerUser: number;
-}) {
+export function Board({ id, name }: { id: string; name: string }) {
 	const [renameMode, setRenameMode] = useState(false);
 	const router = useRouter();
 	const updateMyPresence = useUpdateMyPresence();
-
+	const me = useSelf();
+	// console.log({ me });
 	useEffect(() => {
 		updateMyPresence({ boardId: id });
 		return () => {

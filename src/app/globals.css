@@ -81,3 +81,8 @@ button.with-icon {
 .lb-portal {
 	z-index: 30;
 }
+
+.lb-dropdown {
+	z-index: 50;
+	position: relative;
+}

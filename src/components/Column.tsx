@@ -18,17 +18,9 @@ import { Chip } from "@nextui-org/chip";
 import { FormEvent, useState } from "react";
 import { ReactSortable } from "react-sortablejs";
 
-type ColumnProps = {
-	id: string;
-	name: string;
-};
-
 export function Column({ id, name, limitPerUser }: ColumnT) {
 	const [renameMode, setRenameMode] = useState(false);
 	const [createCardMode, setCreateCardMode] = useState(false);
-	// const session = useSession();
-
-	// console.log({ user });
 
 	const columnCards = useStorage<Card[]>((root) => {
 		return root.cards
@@ -58,6 +50,7 @@ export function Column({ id, name, limitPerUser }: ColumnT) {
 			const allCards: Card[] = [
 				...storage.get("cards").map((c) => c.toObject()),
 			];
+
 			idsOfSortedCards.forEach((sortedCardId, colIndex) => {
 				const cardStorageIndex = allCards.findIndex(
 					(c) => c.id.toString() === sortedCardId
@@ -75,6 +68,9 @@ export function Column({ id, name, limitPerUser }: ColumnT) {
 		const columns = storage.get("columns");
 		columns.find((c) => c.toObject().id === id)?.set("name", newName);
 	}, []);
+	// const getUsers = useMutation(({ storage }) => {
+	// 	return storage.get("users").map((u) => u.toObject());
+	// }, []);
 
 	function handleRenameSubmit(ev: FormEvent) {
 		ev.preventDefault();
@@ -88,11 +84,10 @@ export function Column({ id, name, limitPerUser }: ColumnT) {
 	}
 
 	return (
-		<div className="w-60 bg-transparent hover:shadow-md rounded-md p-2">
+		<div className="w-70 bg-transparent hover:shadow-md rounded-md p-2">
 			{!renameMode && (
 				<div className="flex pl-4 justify-between font-bold capitalize bg-white p-2 rounded-md place-items-center">
 					<h3>{name}</h3>
-					<h3>{limitPerUser}</h3>
 					<Chip variant="bordered">1/{limitPerUser}</Chip>
 					<button
 						onClick={() => setRenameMode(true)}
@@ -133,9 +128,7 @@ export function Column({ id, name, limitPerUser }: ColumnT) {
 					ghostClass="opacity-40"
 				>
 					{columnCards.map((card) => (
-						<>
-							<ColumnCard key={card.id} {...card} />
-						</>
+						<ColumnCard key={card.id} {...card} />
 					))}
 				</ReactSortable>
 			)}
