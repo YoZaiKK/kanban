@@ -16,6 +16,8 @@ export * from './LogoutButton';
 export * from './PresenceAvatars';
 export * from './forms/NewCardForm'
 export * from './forms/NewColumnForm';
+export * from './forms/NewBoardFormModal';
+export * from './forms/NewBoardAccessForm';
 export * from './views/LoginView';
 export * from './views/CardModal';
 export * from './MainMenu';

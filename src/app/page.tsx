@@ -1,4 +1,4 @@
-import { Boards } from "@/components";
+import { Boards, NewBoardFormModal } from "@/components";
 import { LoginView } from "@/components/";
 import { authOptions } from "@/lib/authOptions";
 import { faArrowUpWideShort, faPlus } from "@fortawesome/free-solid-svg-icons";
@@ -33,6 +33,7 @@ export default async function Home() {
 					<FontAwesomeIcon className="h-4 ml-3" icon={faPlus} />
 					Create new board
 				</Link>
+				<NewBoardFormModal />
 			</div>
 			<Boards />
 		</div>

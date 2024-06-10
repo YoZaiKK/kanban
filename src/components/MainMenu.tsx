@@ -3,8 +3,12 @@
 import {
 	faArrowRightFromBracket,
 	faBars,
+	faGear,
+	faHashtag,
 	faHome,
 	faHouse,
+	faPlus,
+	faUser,
 } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
@@ -34,17 +38,17 @@ export const MainMenu = () => {
 					<FontAwesomeIcon icon={faHouse} className="px-3" />
 					All The Projects
 				</DropdownItem>
-				<DropdownItem className="flex gap-4 justify-between" key="copy">
-					<FontAwesomeIcon icon={faHome} className="px-3" />
-					My Projects
-				</DropdownItem>
-				<DropdownItem className="flex gap-4 justify-between" key="edit">
-					<FontAwesomeIcon icon={faHome} className="px-3" />
+				<DropdownItem className="flex gap-4 justify-between" key="create">
+					<FontAwesomeIcon icon={faPlus} className="px-3" />
 					Create Project
 				</DropdownItem>
-				<DropdownItem className="flex gap-4 justify-between" key="edit">
-					<FontAwesomeIcon icon={faHome} className="px-3" />
+				<DropdownItem className="flex gap-4 justify-between" key="profile">
+					<FontAwesomeIcon icon={faUser} className="px-3" />
 					My Profile
+				</DropdownItem>
+				<DropdownItem className="flex gap-4 justify-between" key="settings">
+					<FontAwesomeIcon icon={faGear} className="px-3" />
+					Settings
 				</DropdownItem>
 				<DropdownItem
 					key="delete"
