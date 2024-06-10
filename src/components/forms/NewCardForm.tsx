@@ -1,11 +1,20 @@
 "use client";
 
-import { type Card, useMutation } from "@/app/liveblocks.config";
+import { type Card, useMutation, useSelf } from "@/app/liveblocks.config";
 import { LiveObject } from "@liveblocks/core";
 import { FormEvent } from "react";
 import uniqid from "uniqid";
 
-export const NewCardForm = ({ columnId }: { columnId: string }) => {
+export const NewCardForm = ({
+	columnId,
+}: // author,
+// assignedTo,
+{
+	columnId: string;
+	// author: string;
+}) => {
+	const userInfo = useSelf((me) => me.info);
+
 	const addCard = useMutation(
 		({ storage }, cardName) => {
 			return storage.get("cards").push(
@@ -13,6 +22,8 @@ export const NewCardForm = ({ columnId }: { columnId: string }) => {
 					name: cardName,
 					id: uniqid.time(),
 					index: 9999,
+					author: userInfo?.email.toString() || "",
+					assignedTo: "",
 					columnId: columnId,
 				})
 			);

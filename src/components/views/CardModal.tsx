@@ -36,7 +36,7 @@ export const CardModal = () => {
 				onClick={handleBackdropClick}
 			>
 				<div className="">
-					<div className="bg-white px-4 p-1 my-8 max-w-sm mx-auto rounded-md ">
+					<div className="bg-white px-4 p-2 my-8 max-w-sm mx-auto rounded-md ">
 						<div onClick={(ev) => ev.stopPropagation()}>
 							<CardModalBody />
 						</div>

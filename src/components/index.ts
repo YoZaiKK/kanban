@@ -18,4 +18,5 @@ export * from './forms/NewCardForm'
 export * from './forms/NewColumnForm';
 export * from './views/LoginView';
 export * from './views/CardModal';
+export * from './MainMenu';
 export { default as Header } from './HeaderComponent';

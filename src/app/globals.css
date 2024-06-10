@@ -3,22 +3,20 @@
 @tailwind utilities;
 
 body {
-	background-color: #f6f8fa;
+	background-color: #f4f4f5;
 }
 
-button[type="submit"],
 button.primary,
 .btn {
 	@apply bg-gray-200 text-gray-900 px-4 py-2 border border-gray-200 rounded-md;
 }
 
-button[type="submit"],
 .primary {
 	@apply bg-blue-500 text-white hover:bg-blue-800;
 }
 
 input[type="text"] {
-	@apply w-full block rounded-md border border-gray-200 px-4 py-2;
+	@apply w-full block rounded-md border border-gray-200 px-4 py-2 focus:outline-none focus:border;
 }
 
 button.btn.red {

@@ -11,11 +11,12 @@ export default function NewBoardPage() {
 		const { id } = (await createBoard(boardName as string)) as RoomInfo;
 		redirect(`/boards/${id}`);
 	}
+
 	return (
 		<div>
 			<form action={handleNewBoardSubmit} className="max-w-xs block">
 				<h1 className="text-2xl mb-4">Create a new board</h1>
-				<input type="text" name="name" placeholder="board name" />
+				<input type="text" name="name" placeholder="Name" />
 				<button type="submit" className="mt-2 w-full">
 					Create board
 				</button>

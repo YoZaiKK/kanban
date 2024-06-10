@@ -1,14 +1,20 @@
 "use client";
 
-import { type Card, useMutation, useStorage } from "@/app/liveblocks.config";
-import { CancelButton, Card as ColumnCard, NewCardForm } from "@/components";
 import {
-	faClose,
-	faEllipsis,
-	faTrash,
-} from "@fortawesome/free-solid-svg-icons";
+	type Card,
+	useMutation,
+	useStorage,
+	Column as ColumnT,
+} from "@/app/liveblocks.config";
+import {
+	CancelButton,
+	CardComponent as ColumnCard,
+	NewCardForm,
+} from "@/components";
+import { faEllipsis, faPlus, faTrash } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { shallow } from "@liveblocks/client";
+import { Chip } from "@nextui-org/chip";
 import { FormEvent, useState } from "react";
 import { ReactSortable } from "react-sortablejs";
 
@@ -17,8 +23,12 @@ type ColumnProps = {
 	name: string;
 };
 
-export function Column({ id, name }: ColumnProps) {
+export function Column({ id, name, limitPerUser }: ColumnT) {
 	const [renameMode, setRenameMode] = useState(false);
+	const [createCardMode, setCreateCardMode] = useState(false);
+	// const session = useSession();
+
+	// console.log({ user });
 
 	const columnCards = useStorage<Card[]>((root) => {
 		return root.cards
@@ -76,16 +86,22 @@ export function Column({ id, name }: ColumnProps) {
 			setRenameMode(false);
 		}
 	}
+
 	return (
-		<div className="w-48 bg-white shadow-sm rounded-md p-2">
+		<div className="w-60 bg-transparent hover:shadow-md rounded-md p-2">
 			{!renameMode && (
-				<div className="flex justify-between">
+				<div className="flex pl-4 justify-between font-bold capitalize bg-white p-2 rounded-md place-items-center">
 					<h3>{name}</h3>
+					<h3>{limitPerUser}</h3>
+					<Chip variant="bordered">1/{limitPerUser}</Chip>
 					<button
 						onClick={() => setRenameMode(true)}
 						className="text-gray-300 hover:text-gray-600"
 					>
-						<FontAwesomeIcon icon={faEllipsis} />
+						<FontAwesomeIcon
+							className="p-3 rounded-md bg-defaultBG text-black hover:shadow-inner  transition-colors duration-200 ease-in-out shadow-md "
+							icon={faEllipsis}
+						/>
 					</button>
 				</div>
 			)}
@@ -117,11 +133,28 @@ export function Column({ id, name }: ColumnProps) {
 					ghostClass="opacity-40"
 				>
 					{columnCards.map((card) => (
-						<ColumnCard key={card.id} {...card} />
+						<>
+							<ColumnCard key={card.id} {...card} />
+						</>
 					))}
 				</ReactSortable>
 			)}
-			{!renameMode && <NewCardForm columnId={id} />}
+			{/* {!renameMode && <NewCardForm columnId={id} />} */}
+			{!createCardMode && !renameMode && (
+				<button
+					onClick={() => setCreateCardMode(true)}
+					className="bg-forthColor text-primaryColor font-bold p-2 rounded-md w-full mt-2 gap-2 flex pl-5 items-center hover:bg-primaryColor hover:text-forthColor transition-colors duration-200 ease-in-out shadow-md hover:shadow-lg"
+				>
+					<FontAwesomeIcon icon={faPlus} />
+					Create card
+				</button>
+			)}
+			{createCardMode && (
+				<>
+					<NewCardForm columnId={id} />
+					<CancelButton onClick={() => setCreateCardMode(false)} />
+				</>
+			)}
 		</div>
 	);
 }

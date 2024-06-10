@@ -29,12 +29,15 @@ export type Column = {
   name: string;
   id: string;
   index: number;
+  limitPerUser: number;
 }
 
 export type Card = {
   name: string;
   id: string;
   index: number;
+  author: string;
+  assignedTo: string;
   columnId: string;
 }
 

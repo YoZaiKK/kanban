@@ -83,10 +83,13 @@ export const CardModalBody = () => {
 				<div className="flex justify-between">
 					<h4 className="text-2xl">{card?.name}</h4>
 					<button
-						className=" text-gray-400 hover:text-gray-600"
+						className=" text-gray-300 hover:text-gray-600"
 						onClick={() => setEditMode(true)}
 					>
-						<FontAwesomeIcon icon={faEllipsis} />
+						<FontAwesomeIcon
+							icon={faEllipsis}
+							className="p-3 rounded-md bg-defaultBG text-black hover:shadow-inner  transition-colors duration-200 ease-in-out shadow-md "
+						/>
 					</button>
 				</div>
 			)}

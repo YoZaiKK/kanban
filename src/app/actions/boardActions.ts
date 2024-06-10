@@ -23,7 +23,8 @@ export async function createBoard(name: string): Promise<boolean | RoomInfo> {
         [email]: ['room:write']
       },
       metadata: {
-        boardName: name
+        boardName: name,
+        createdBy: email,
       }
     })
   }
