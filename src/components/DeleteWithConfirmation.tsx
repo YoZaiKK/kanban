@@ -2,6 +2,7 @@
 
 import { faArrowLeft, faTrash } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { Tooltip } from "@nextui-org/tooltip";
 import { useState } from "react";
 
 type Props = {
@@ -26,8 +27,11 @@ export const DeleteWithConfirmation = ({ onDelete }: Props) => {
 						</button>
 					</div>
 					<div>
-						<button onClick={onDelete} className="w-full btn red with-icon ">
-							Yes, delete!
+						<button
+							onClick={onDelete}
+							className="w-full btn red with-icon block"
+						>
+							Yes
 						</button>
 					</div>
 				</div>
@@ -35,12 +39,13 @@ export const DeleteWithConfirmation = ({ onDelete }: Props) => {
 		);
 	}
 	return (
-		<button
-			onClick={() => setWannaDelete(true)}
-			className="bg-red-500 text-white p-2 w-full justify-center items-center flex gap-2 rounded-md hover:bg-red-800"
-		>
-			<FontAwesomeIcon icon={faTrash} />
-			Delete
-		</button>
+		<Tooltip content="Delete this board" placement="top">
+			<button
+				onClick={() => setWannaDelete(true)}
+				className="bg-red-500 text-white w-full h-full justify-center items-center flex gap-2 rounded-md hover:bg-red-800 duration-300 hover:shadow-lg"
+			>
+				<FontAwesomeIcon icon={faTrash} className="h-5 w-5" />
+			</button>
+		</Tooltip>
 	);
 };

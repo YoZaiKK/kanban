@@ -24,7 +24,11 @@ export default function NewBoardAccess({ boardId }: { boardId: string }) {
 				placeholder="john@example.com"
 				name="email"
 			/>
-			<button className="w-full mt-2" type="submit">
+			<button
+				className="w-full mt-2
+				bg-thirdColor text-white p-2 rounded-md hover:bg-primaryColor duration-300 hover:shadow-lg"
+				type="submit"
+			>
 				Save
 			</button>
 		</form>

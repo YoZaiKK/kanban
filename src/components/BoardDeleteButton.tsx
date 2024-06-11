@@ -1,5 +1,8 @@
 "use client";
 import { deleteBoard } from "@/app/actions/boardActions";
+import { faTrash } from "@fortawesome/free-solid-svg-icons";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { Button } from "@nextui-org/react";
 import { useRouter } from "next/navigation";
 
 export const BoardDeleteButton = ({ boardId }: { boardId: string }) => {
@@ -10,12 +13,12 @@ export const BoardDeleteButton = ({ boardId }: { boardId: string }) => {
 	}
 	return (
 		<div className="">
-			<button
-				className=" bg-red-500 text-white px-4 py-2 rounded-md hover:bg-red-600 duration-300 hover:shadow-lg"
+			<Button
+				className="bg-red-500 text-white p-2 rounded-md hover:bg-red-600 duration-300 hover:shadow-lg"
 				onClick={() => handleDeleteBoard()}
 			>
-				Delete board
-			</button>
+				<FontAwesomeIcon icon={faTrash} />
+			</Button>
 		</div>
 	);
 };

@@ -5,7 +5,6 @@ import { faTrash } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { RoomAccesses } from "@liveblocks/node";
 import { useRouter } from "next/navigation";
-import { idText } from "typescript";
 
 export const EmailsAccessList = ({
 	boardId,
@@ -17,6 +16,12 @@ export const EmailsAccessList = ({
 	const router = useRouter();
 
 	async function handleDelete(emailToDelete: string) {
+		const users = Object.keys(usersAccesses);
+		if (users.length === 1) {
+			await deleteBoard(boardId);
+			router.push("/");
+			return;
+		}
 		await removeEmailFromBoard(boardId, emailToDelete);
 		router.refresh();
 	}

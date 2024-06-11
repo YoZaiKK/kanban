@@ -3,6 +3,7 @@
 import {
 	RoomProvider,
 	useSelf,
+	useStorage,
 	useUpdateMyPresence,
 } from "@/app/liveblocks.config";
 import { LiveList } from "@liveblocks/client";
@@ -16,6 +17,7 @@ import { updateBoard } from "@/app/actions/boardActions";
 import { useRouter } from "next/navigation";
 import { BoardContextProvider } from "./BoardContext";
 import { faPenToSquare } from "@fortawesome/free-regular-svg-icons";
+import { Tooltip } from "@nextui-org/tooltip";
 
 export function Board({ id, name }: { id: string; name: string }) {
 	const [renameMode, setRenameMode] = useState(false);
@@ -41,6 +43,10 @@ export function Board({ id, name }: { id: string; name: string }) {
 			router.refresh();
 		}
 	}
+
+	// const handleAllUsers = useStorage((root) => {
+	// 	return root;
+	// })
 
 	return (
 		<BoardContextProvider>
@@ -91,10 +97,12 @@ export function Board({ id, name }: { id: string; name: string }) {
 									)}
 								</div>
 								<span>
-									<FontAwesomeIcon
-										className="p-3 h-4 border-1  rounded-md bg-defaultBG text-black hover:shadow-inner  transition-colors duration-300 ease-in-out shadow-md"
-										icon={faArrowUpWideShort}
-									/>
+									<Tooltip content="Settings">
+										<FontAwesomeIcon
+											className="p-3 h-4 border-1  rounded-md bg-defaultBG text-black hover:shadow-inner  transition-colors duration-300 ease-in-out shadow-md"
+											icon={faArrowUpWideShort}
+										/>
+									</Tooltip>
 									<Link
 										className="text-gray-300 hover:text-gray-600"
 										href={`/boards/${id}/settings`}

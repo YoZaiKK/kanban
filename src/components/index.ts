@@ -1,4 +1,5 @@
 export * from './Board';
+export * from './BoardCard';
 export * from './Boards';
 export * from './BoardsTiles';
 export * from './BoardContext';
@@ -23,4 +24,5 @@ export * from './views/LoginView';
 export * from './views/CardModal';
 export * from './MainMenu';
 export * from './NotificationsBox';
+export * from './UsersList';
 export { default as Header } from './HeaderComponent';

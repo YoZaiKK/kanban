@@ -13,24 +13,28 @@ import {
 	useDisclosure,
 	Switch,
 } from "@nextui-org/react";
-import { redirect } from "next/navigation";
+import { useRouter } from "next/navigation";
 import { useState } from "react";
 
 export const NewBoardFormModal = () => {
 	const { isOpen, onOpen, onOpenChange } = useDisclosure();
+	const router = useRouter();
 	const [inputValue, setInputValue] = useState("");
+
 	async function handleNewBoardSubmit(formData: FormData) {
 		console.log(formData);
 		const boardName = formData.get("name")?.toString() || "";
 		const { id } = (await createBoard(boardName as string)) as RoomInfo;
-		redirect(`/boards/${id}`);
+		router.refresh();
+		onOpenChange();
+		// redirect(`/boards/${id}`);
 	}
 
 	return (
 		<>
 			<Button
 				onPress={onOpen}
-				className="px-4 py-2 text-white  rounded-md inline-flex gap-2 w-full bg-customTeal shadow-md  hover:shadow-lg hover:bg-customTealDark transition-colors duration-200 ease-in-out items-center justify-start"
+				className="mt-4 px-4 py-2 text-white  rounded-md inline-flex gap-2 w-full bg-customTeal shadow-md  hover:shadow-lg hover:bg-customTealDark transition-colors duration-200 ease-in-out items-center justify-start"
 			>
 				<FontAwesomeIcon className="h-4 ml-3" icon={faPlus} />
 				Create new board

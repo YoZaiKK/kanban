@@ -105,7 +105,11 @@ export function Column({ id, name, limitPerUser }: ColumnT) {
 					Edit name:
 					<form onSubmit={handleRenameSubmit} className="mb-2">
 						<input type="text" defaultValue={name} />
-						<button type="submit" className="w-full mt-2">
+						<button
+							type="submit"
+							className="w-full mt-2
+				bg-thirdColor text-white p-2 rounded-md hover:bg-primaryColor duration-300 hover:shadow-lg"
+						>
 							Save
 						</button>
 					</form>
