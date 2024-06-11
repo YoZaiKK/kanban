@@ -22,9 +22,12 @@ const usuarios = [
 
 export const NewCardForm = ({
 	columnId,
+	changeCreateMode,
 }: // assignedTo = "",
 {
 	columnId: string;
+	changeCreateMode: () => void;
+
 	// assignedTo: string;
 }) => {
 	const [inputValue, setInputValue] = useState("");
@@ -32,7 +35,6 @@ export const NewCardForm = ({
 	const [users, setUsers] = useState<string[]>([]);
 	const userInfo = useSelf((me) => me.info);
 	const { id } = useRoom();
-	console.log({ id });
 
 	useEffect(() => {
 		async function getUsers() {
@@ -73,6 +75,8 @@ export const NewCardForm = ({
 			input.value = "";
 			setInputValue("");
 			setAssignedTo("");
+			changeCreateMode();
+			//
 		}
 	}
 	return (

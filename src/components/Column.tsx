@@ -30,7 +30,6 @@ export function Column({ column, filterActive }: Props) {
 	const [createCardMode, setCreateCardMode] = useState(false);
 
 	const email = useSelf((me) => me.info.email);
-	console.log({ email });
 
 	const columnCards = useStorage<Card[]>((root) => {
 		return root.cards
@@ -99,7 +98,9 @@ export function Column({ column, filterActive }: Props) {
 			<div className="w-70 bg-transparent hover:shadow-md rounded-md p-2">
 				<div className="flex pl-4 justify-between font-bold capitalize bg-white p-2 rounded-md place-items-center">
 					<h3>{name}</h3>
-					<Chip variant="bordered">1/{limitPerUser}</Chip>
+					<Chip variant="bordered">
+						{filterCards()?.length}/{limitPerUser}
+					</Chip>
 					<button
 						onClick={() => setRenameMode(true)}
 						className="text-gray-300 hover:text-gray-600"
@@ -136,16 +137,21 @@ export function Column({ column, filterActive }: Props) {
 				{filterCards()?.map((card) => (
 					<ColumnCard key={card.id} {...card} />
 				))}
-				<button
-					onClick={() => setCreateCardMode(true)}
-					className="bg-forthColor text-primaryColor font-bold p-2 rounded-md w-full mt-2 gap-2 flex pl-5 items-center hover:bg-primaryColor hover:text-forthColor transition-colors duration-200 ease-in-out shadow-md hover:shadow-lg"
-				>
-					<FontAwesomeIcon icon={faPlus} />
-					Create card
-				</button>
+				{!createCardMode && !renameMode && (
+					<button
+						onClick={() => setCreateCardMode(true)}
+						className="bg-forthColor text-primaryColor font-bold p-2 rounded-md w-full mt-2 gap-2 flex pl-5 items-center hover:bg-primaryColor hover:text-forthColor transition-colors duration-200 ease-in-out shadow-md hover:shadow-lg"
+					>
+						<FontAwesomeIcon icon={faPlus} />
+						Create card
+					</button>
+				)}
 				{createCardMode && (
 					<>
-						<NewCardForm columnId={id} />
+						<NewCardForm
+							columnId={id}
+							changeCreateMode={() => setCreateCardMode(false)}
+						/>
 						<CancelButton onClick={() => setCreateCardMode(false)} />
 					</>
 				)}
@@ -158,7 +164,9 @@ export function Column({ column, filterActive }: Props) {
 			{!renameMode && (
 				<div className="flex pl-4 justify-between font-bold capitalize bg-white p-2 rounded-md place-items-center">
 					<h3>{name}</h3>
-					<Chip variant="bordered">1/{limitPerUser}</Chip>
+					<Chip variant="bordered">
+						{filterCards()?.length}/{limitPerUser}
+					</Chip>
 					<button
 						onClick={() => setRenameMode(true)}
 						className="text-gray-300 hover:text-gray-600"
@@ -218,7 +226,10 @@ export function Column({ column, filterActive }: Props) {
 			)}
 			{createCardMode && (
 				<>
-					<NewCardForm columnId={id} />
+					<NewCardForm
+						columnId={id}
+						changeCreateMode={() => setCreateCardMode(false)}
+					/>
 					<CancelButton onClick={() => setCreateCardMode(false)} />
 				</>
 			)}

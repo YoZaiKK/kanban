@@ -28,9 +28,6 @@ export function Board({ id, name }: { id: string; name: string }) {
 	const [filter, setFilter] = useState(false);
 	const router = useRouter();
 	const updateMyPresence = useUpdateMyPresence();
-	// const email = useSelf((me) => me.info.email);
-
-	// console.log({ email });
 
 	useEffect(() => {
 		updateMyPresence({ boardId: id });
