@@ -9,5 +9,5 @@ export const Boards = async () => {
 	const { data: rooms } = await liveblocksClient.getRooms({
 		userId: email,
 	});
-	return <BoardsTiles boards={rooms} />;
+	return <BoardsTiles boards={rooms} email={email} />;
 };

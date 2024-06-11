@@ -1,11 +1,17 @@
 "use client";
 
-import { type Card, useMutation, useSelf } from "@/app/liveblocks.config";
+import {
+	type Card,
+	useMutation,
+	useSelf,
+	useRoom,
+} from "@/app/liveblocks.config";
+import { liveblocksClient } from "@/lib/liveblocksClient";
 import { faPlus } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { LiveObject } from "@liveblocks/core";
 import { Select, SelectItem } from "@nextui-org/select";
-import { FormEvent, useState } from "react";
+import { FormEvent, useEffect, useState } from "react";
 import uniqid from "uniqid";
 
 const usuarios = [
@@ -23,7 +29,20 @@ export const NewCardForm = ({
 }) => {
 	const [inputValue, setInputValue] = useState("");
 	const [assignedTo, setAssignedTo] = useState("");
+	const [users, setUsers] = useState<string[]>([]);
 	const userInfo = useSelf((me) => me.info);
+	const { id } = useRoom();
+	console.log({ id });
+
+	useEffect(() => {
+		async function getUsers() {
+			const boardInfo = await liveblocksClient.getRoom(id);
+			const usersAccesses = boardInfo.usersAccesses;
+			setUsers(Object.keys(usersAccesses));
+		}
+		getUsers();
+		console.log({ users });
+	}, []);
 
 	const addCard = useMutation(
 		({ storage }, cardName, assignedTo) => {
@@ -40,6 +59,7 @@ export const NewCardForm = ({
 		},
 		[columnId]
 	);
+
 	const handleSelectionChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
 		setAssignedTo(e.target.value);
 	};
@@ -70,7 +90,7 @@ export const NewCardForm = ({
 					className="block"
 					onChange={handleSelectionChange}
 				>
-					{usuarios.map((user) => (
+					{users.map((user) => (
 						<SelectItem key={user} value={user}>
 							{user}
 						</SelectItem>

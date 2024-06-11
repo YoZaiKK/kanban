@@ -5,6 +5,7 @@ import {
 	useMutation,
 	useStorage,
 	Column as ColumnT,
+	useSelf,
 } from "@/app/liveblocks.config";
 import {
 	CancelButton,
@@ -18,9 +19,18 @@ import { Chip } from "@nextui-org/chip";
 import { FormEvent, useState } from "react";
 import { ReactSortable } from "react-sortablejs";
 
-export function Column({ id, name, limitPerUser }: ColumnT) {
+type Props = {
+	column: ColumnT;
+	filterActive: boolean;
+};
+
+export function Column({ column, filterActive }: Props) {
+	const { id, name, limitPerUser } = column;
 	const [renameMode, setRenameMode] = useState(false);
 	const [createCardMode, setCreateCardMode] = useState(false);
+
+	const email = useSelf((me) => me.info.email);
+	console.log({ email });
 
 	const columnCards = useStorage<Card[]>((root) => {
 		return root.cards
@@ -68,9 +78,6 @@ export function Column({ id, name, limitPerUser }: ColumnT) {
 		const columns = storage.get("columns");
 		columns.find((c) => c.toObject().id === id)?.set("name", newName);
 	}, []);
-	// const getUsers = useMutation(({ storage }) => {
-	// 	return storage.get("users").map((u) => u.toObject());
-	// }, []);
 
 	function handleRenameSubmit(ev: FormEvent) {
 		ev.preventDefault();
@@ -81,6 +88,69 @@ export function Column({ id, name, limitPerUser }: ColumnT) {
 			input.value = "";
 			setRenameMode(false);
 		}
+	}
+
+	function filterCards() {
+		return columnCards?.filter((card) => card.assignedTo === email);
+	}
+
+	if (filterActive) {
+		return (
+			<div className="w-70 bg-transparent hover:shadow-md rounded-md p-2">
+				<div className="flex pl-4 justify-between font-bold capitalize bg-white p-2 rounded-md place-items-center">
+					<h3>{name}</h3>
+					<Chip variant="bordered">1/{limitPerUser}</Chip>
+					<button
+						onClick={() => setRenameMode(true)}
+						className="text-gray-300 hover:text-gray-600"
+					>
+						<FontAwesomeIcon
+							className="p-3 rounded-md bg-defaultBG text-black hover:shadow-inner  transition-colors duration-200 ease-in-out shadow-md "
+							icon={faEllipsis}
+						/>
+					</button>
+				</div>
+				{renameMode && (
+					<div className="mb-8">
+						Edit name:
+						<form onSubmit={handleRenameSubmit} className="mb-2">
+							<input type="text" defaultValue={name} />
+							<button
+								type="submit"
+								className="w-full mt-2
+				bg-thirdColor text-white p-2 rounded-md hover:bg-primaryColor duration-300 hover:shadow-lg"
+							>
+								Save
+							</button>
+						</form>
+						<button
+							onClick={() => deleteColumn(id)}
+							className="bg-red-500 text-white p-2 flex gap-2 w-full items-center rounded-md justify-center hover:bg-red-800 "
+						>
+							<FontAwesomeIcon icon={faTrash} />
+							Delete column
+						</button>
+						<CancelButton onClick={() => setRenameMode(false)} />
+					</div>
+				)}
+				{filterCards()?.map((card) => (
+					<ColumnCard key={card.id} {...card} />
+				))}
+				<button
+					onClick={() => setCreateCardMode(true)}
+					className="bg-forthColor text-primaryColor font-bold p-2 rounded-md w-full mt-2 gap-2 flex pl-5 items-center hover:bg-primaryColor hover:text-forthColor transition-colors duration-200 ease-in-out shadow-md hover:shadow-lg"
+				>
+					<FontAwesomeIcon icon={faPlus} />
+					Create card
+				</button>
+				{createCardMode && (
+					<>
+						<NewCardForm columnId={id} />
+						<CancelButton onClick={() => setCreateCardMode(false)} />
+					</>
+				)}
+			</div>
+		);
 	}
 
 	return (

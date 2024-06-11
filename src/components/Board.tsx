@@ -11,20 +11,27 @@ import { ClientSideSuspense } from "@liveblocks/react";
 import { Columns } from "./Columns";
 import Link from "next/link";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faArrowUpWideShort, faBars } from "@fortawesome/free-solid-svg-icons";
+import {
+	faArrowUpWideShort,
+	faBars,
+	faGear,
+} from "@fortawesome/free-solid-svg-icons";
 import { FormEvent, useEffect, useState } from "react";
 import { updateBoard } from "@/app/actions/boardActions";
 import { useRouter } from "next/navigation";
 import { BoardContextProvider } from "./BoardContext";
-import { faPenToSquare } from "@fortawesome/free-regular-svg-icons";
+import { faPenToSquare, faUser } from "@fortawesome/free-regular-svg-icons";
 import { Tooltip } from "@nextui-org/tooltip";
 
 export function Board({ id, name }: { id: string; name: string }) {
 	const [renameMode, setRenameMode] = useState(false);
+	const [filter, setFilter] = useState(false);
 	const router = useRouter();
 	const updateMyPresence = useUpdateMyPresence();
-	const me = useSelf();
-	// console.log({ me });
+	// const email = useSelf((me) => me.info.email);
+
+	// console.log({ email });
+
 	useEffect(() => {
 		updateMyPresence({ boardId: id });
 		return () => {
@@ -44,10 +51,6 @@ export function Board({ id, name }: { id: string; name: string }) {
 		}
 	}
 
-	// const handleAllUsers = useStorage((root) => {
-	// 	return root;
-	// })
-
 	return (
 		<BoardContextProvider>
 			<RoomProvider
@@ -65,7 +68,7 @@ export function Board({ id, name }: { id: string; name: string }) {
 					{/* // TODO add loading spinner */}
 					{() => (
 						<>
-							<div className="flex gap-2 justify-between items-center mb-4">
+							<div className="flex gap-2 justify-between items-center mb-4 px-12">
 								<div className="">
 									{!renameMode && (
 										<h1
@@ -96,25 +99,37 @@ export function Board({ id, name }: { id: string; name: string }) {
 										</form>
 									)}
 								</div>
-								<span>
-									<Tooltip content="Settings">
-										<FontAwesomeIcon
-											className="p-3 h-4 border-1  rounded-md bg-defaultBG text-black hover:shadow-inner  transition-colors duration-300 ease-in-out shadow-md"
-											icon={faArrowUpWideShort}
-										/>
+								<span className="flex gap-2 items-center">
+									<Tooltip content="My own" placement="bottom">
+										<button
+											className="flex items-center"
+											onClick={() => setFilter(!filter)}
+										>
+											<FontAwesomeIcon
+												className={
+													"p-3 h-4 border-1  rounded-md  hover:shadow-inner  transition-colors duration-300 ease-in-out shadow-md" +
+													(filter
+														? " bg-primaryColor text-forthColor"
+														: " bg-defaultBG text-black")
+												}
+												icon={faUser}
+											/>
+										</button>
 									</Tooltip>
-									<Link
-										className="text-gray-300 hover:text-gray-600"
-										href={`/boards/${id}/settings`}
-									>
-										<FontAwesomeIcon
-											icon={faBars}
-											className="p-3 border-1 rounded-md bg-defaultBG text-black hover:shadow-inner  transition-colors duration-300 ease-in-out shadow-md"
-										/>
-									</Link>
+									<Tooltip content="Settings" placement="bottom">
+										<button
+											className="flex items-center"
+											onClick={() => router.push(`/boards/${id}/settings`)}
+										>
+											<FontAwesomeIcon
+												icon={faGear}
+												className="p-3 h-4 border-1  rounded-md  hover:shadow-inner  transition-colors duration-300 ease-in-out shadow-md bg-defaultBG text-black"
+											/>
+										</button>
+									</Tooltip>
 								</span>
 							</div>
-							<Columns />
+							<Columns filterActive={filter} />
 						</>
 					)}
 				</ClientSideSuspense>

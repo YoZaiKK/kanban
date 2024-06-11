@@ -29,7 +29,7 @@ export const BoardCard = ({ board }: { board: RoomInfo }) => {
 		router.refresh();
 	}
 	return (
-		<div className="flex gap-1">
+		<div className="flex gap-2">
 			<Card
 				key={board.id}
 				className="rounded-md shadow-md hover:shadow-lg duration-300 transition-shadow ease-in-out w-full"
@@ -60,13 +60,20 @@ export const BoardCard = ({ board }: { board: RoomInfo }) => {
 						<div className="flex justify-end">
 							{board.usersAccesses && (
 								<div className="grid grid-cols-1 gap-1 items-end justify-end">
-									{Object.keys(board.usersAccesses).map((email) => (
-										<Chip
-											key={email}
-											className="items-center bg-defaultBG text-black p-2"
-										>
-											{email}
-										</Chip>
+									{Object.keys(board.usersAccesses).map((email, index) => (
+										<>
+											{
+												// Limit the number of emails to show
+												index < 3 && (
+													<Chip
+														key={email}
+														className="items-center bg-defaultBG text-black p-2"
+													>
+														{email}
+													</Chip>
+												)
+											}
+										</>
 									))}
 								</div>
 							)}
@@ -92,7 +99,10 @@ export const BoardCard = ({ board }: { board: RoomInfo }) => {
 					</Button>
 				</Tooltip>
 				<Tooltip content="Edit board">
-					<Button className="rounded-md w-full h-full duration-300 hover:shadow-lg">
+					<Button
+						className="rounded-md w-full h-full duration-300 hover:shadow-lg"
+						onClick={() => router.push(`/boards/${board.id}/settings`)}
+					>
 						<FontAwesomeIcon icon={faGear} className="h-5 w-5" />
 					</Button>
 				</Tooltip>

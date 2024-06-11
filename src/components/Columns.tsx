@@ -4,7 +4,7 @@ import { Column as BoardColumn, NewColumnForm } from "@/components/";
 import { LiveList, LiveObject, shallow } from "@liveblocks/client";
 import { ReactSortable } from "react-sortablejs";
 
-export const Columns = () => {
+export const Columns = ({ filterActive }: { filterActive: boolean }) => {
 	const columns = useStorage(
 		(root) => root.columns.map((c) => ({ ...c })),
 		shallow
@@ -29,7 +29,7 @@ export const Columns = () => {
 
 	if (!columns) return null;
 	return (
-		<div className="flex gap-4">
+		<div className="flex gap-4 px-12">
 			<ReactSortable
 				group={"board-column"}
 				list={columns}
@@ -38,7 +38,14 @@ export const Columns = () => {
 				setList={setColumnsOrder}
 			>
 				{columns?.length > 0 &&
-					columns.map((column) => <BoardColumn {...column} key={column.id} />)}
+					columns.map((column) => (
+						<BoardColumn
+							// {...column}
+							column={column}
+							filterActive={filterActive}
+							key={column.id}
+						/>
+					))}
 			</ReactSortable>
 			<NewColumnForm />
 		</div>
