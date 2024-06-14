@@ -23,12 +23,9 @@ const usuarios = [
 export const NewCardForm = ({
 	columnId,
 	changeCreateMode,
-}: // assignedTo = "",
-{
+}: {
 	columnId: string;
 	changeCreateMode: () => void;
-
-	// assignedTo: string;
 }) => {
 	const [inputValue, setInputValue] = useState("");
 	const [assignedTo, setAssignedTo] = useState("");

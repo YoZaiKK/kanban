@@ -3,11 +3,9 @@
 import {
 	faArrowRightFromBracket,
 	faBars,
-	faGear,
-	faHashtag,
-	faHome,
 	faHouse,
 	faPlus,
+	faQuestion,
 	faUser,
 } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -19,8 +17,11 @@ import {
 	Tooltip,
 } from "@nextui-org/react";
 import { signOut } from "next-auth/react";
+import { useRouter } from "next/navigation";
 
 export const MainMenu = () => {
+	const router = useRouter();
+
 	return (
 		<Dropdown>
 			<DropdownTrigger>
@@ -36,19 +37,23 @@ export const MainMenu = () => {
 			<DropdownMenu aria-label="Static Actions">
 				<DropdownItem className="flex gap-4 justify-between" key="new">
 					<FontAwesomeIcon icon={faHouse} className="px-3" />
-					All The Projects
+					All Boards
 				</DropdownItem>
-				<DropdownItem className="flex gap-4 justify-between" key="create">
+				<DropdownItem
+					onClick={() => router.push("/new-board")}
+					className="flex gap-4 justify-between"
+					key="create"
+				>
 					<FontAwesomeIcon icon={faPlus} className="px-3" />
-					Create Project
+					Create Board
 				</DropdownItem>
-				<DropdownItem className="flex gap-4 justify-between" key="profile">
-					<FontAwesomeIcon icon={faUser} className="px-3" />
-					My Profile
-				</DropdownItem>
-				<DropdownItem className="flex gap-4 justify-between" key="settings">
-					<FontAwesomeIcon icon={faGear} className="px-3" />
-					Settings
+				<DropdownItem
+					onClick={() => router.push("/faqs")}
+					className="flex gap-4 justify-between"
+					key="profile"
+				>
+					<FontAwesomeIcon icon={faQuestion} className="px-3" />
+					FAQ&apos;s
 				</DropdownItem>
 				<DropdownItem
 					key="delete"
