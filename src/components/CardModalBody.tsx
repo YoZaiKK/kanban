@@ -1,7 +1,7 @@
 "use client";
 
 import { useParams, useRouter } from "next/navigation";
-import { FormEvent, useContext, useEffect, useState } from "react";
+import React, { FormEvent, useContext, useEffect, useState } from "react";
 import { BoardContext, BoardContextProps } from "@/components";
 import {
 	type Card,
@@ -24,9 +24,15 @@ import {
 import "@liveblocks/react-comments/styles.css";
 import { liveblocksClient } from "@/lib/liveblocksClient";
 import { Select, SelectItem } from "@nextui-org/select";
-import { Progress, Slider } from "@nextui-org/react";
+import { DateValue, Progress, RangeValue, Slider } from "@nextui-org/react";
+import { DateRangePicker } from "@nextui-org/date-picker";
+import { getLocalTimeZone, parseDate, today } from "@internationalized/date";
 
 export const CardModalBody = () => {
+	const [dateRange, setDateRange] = React.useState<RangeValue<DateValue>>({
+		start: today(getLocalTimeZone()),
+		end: today(getLocalTimeZone()).add({ weeks: 1 }),
+	});
 	const [value, setValue] = useState(0);
 	const [assignedTo, setAssignedTo] = useState("");
 	const [users, setUsers] = useState<string[]>([]);
@@ -37,6 +43,8 @@ export const CardModalBody = () => {
 	const { id } = roomInfo;
 	const router = useRouter();
 	const params = useParams();
+	const todayDate = today(getLocalTimeZone());
+	const inAWeek = todayDate.add({ weeks: 1 });
 
 	const { threads } = useThreads({
 		query: {
@@ -75,11 +83,15 @@ export const CardModalBody = () => {
 			const boardInfo = await liveblocksClient.getRoom(id);
 			const usersAccesses = boardInfo.usersAccesses;
 			setUsers(Object.keys(usersAccesses));
-			console.log(users);
+			// console.log(users);
 		}
 		getUsers();
 		setAssignedTo(card?.assignedTo || "");
 		setValue(card?.percentComplete || 0);
+		setDateRange({
+			start: parseDate(card?.start || todayDate.toString()),
+			end: parseDate(card?.end || inAWeek.toString()),
+		});
 	}, [params]);
 
 	function handleDelete() {
@@ -88,6 +100,7 @@ export const CardModalBody = () => {
 		setOpenCard(null);
 		router.back();
 	}
+
 	function handleNameChange(ev: FormEvent) {
 		ev.preventDefault();
 
@@ -98,12 +111,27 @@ export const CardModalBody = () => {
 			name: newName,
 			assignedTo,
 			percentComplete: value,
+			start: formatDateString(
+				`${dateRange.start.year}-${dateRange.start.month}-${dateRange.start.day}`
+			),
+			end: formatDateString(
+				`${dateRange.end.year}-${dateRange.end.month}-${dateRange.end.day}`
+			),
 		});
 		setEditMode(false);
 	}
+
 	const handleSelectionChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
 		setAssignedTo(e.target.value);
 	};
+
+	function formatDateString(dateString: string) {
+		const date = new Date(dateString);
+		const year = date.getFullYear();
+		const month = String(date.getMonth() + 1).padStart(2, "0"); // Month is zero-based
+		const day = String(date.getDate()).padStart(2, "0");
+		return `${year}-${month}-${day}`;
+	}
 
 	return (
 		<>
@@ -145,7 +173,14 @@ export const CardModalBody = () => {
 								</SelectItem>
 							))}
 						</Select>
-
+						<span className="mt-2">Edit date range:</span>
+						<DateRangePicker
+							isRequired
+							aria-label="Date range"
+							minValue={today(getLocalTimeZone())}
+							className="mb-4"
+							onChange={setDateRange as (value: RangeValue<DateValue>) => void}
+						/>
 						{me?.email === card?.assignedTo && (
 							<>
 								<span className="mt-2">Percent of completion</span>
@@ -160,7 +195,6 @@ export const CardModalBody = () => {
 									onChange={setValue as (value: number | number[]) => void}
 									className="max-w-md"
 									showTooltip={true}
-									// formatOptions={{ style: "percent" }}
 								/>
 							</>
 						)}
@@ -187,8 +221,16 @@ export const CardModalBody = () => {
 						Description
 					</h2>
 					<CardDescription />
+
+					<DateRangePicker
+						label="Date range"
+						isReadOnly
+						className="w-full mt-4"
+						value={dateRange}
+					/>
+
 					<Progress
-						aria-label="Downloading..."
+						aria-label="Progress percentage"
 						size="md"
 						value={value}
 						color="success"

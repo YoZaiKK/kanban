@@ -47,6 +47,8 @@ export const NewCardForm = ({
 					assignedTo: assignedTo,
 					columnId: columnId,
 					percentComplete: 0,
+					start: "",
+					end: "",
 				})
 			);
 		},

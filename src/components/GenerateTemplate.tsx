@@ -50,6 +50,9 @@ export function GenerateTemplate() {
 						author: email || "mail@example.com",
 						assignedTo: email || "mail@example.com",
 						columnId: colId,
+						percentComplete: 0,
+						start: "2024-07-07",
+						end: "2024-10-08",
 					})
 				);
 			}, []);
