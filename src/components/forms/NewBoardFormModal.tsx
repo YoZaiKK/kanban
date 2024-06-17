@@ -56,14 +56,6 @@ export const NewBoardFormModal = () => {
 										className="w-full h-10 p-2 rounded-md border-1 border-gray-300 focus:border-primaryColor focus:shadow-md transition-colors duration-300 ease-in-out mb-4"
 										value={inputValue}
 									/>
-									<Switch
-										defaultSelected
-										size="sm"
-										color="success"
-										className="mb-4"
-									>
-										Private
-									</Switch>
 								</ModalBody>
 
 								<ModalFooter>

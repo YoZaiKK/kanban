@@ -44,14 +44,14 @@ export function NewColumnForm() {
 	return (
 		<div className="  ">
 			{!addNewColumn && (
-				<button
-					onClick={() => setAddNewColumn(true)}
-					className="bg-thirdColor text-forthColor rounded-md hover:bg-primaryColor  transition-colors items-center justify-center flex p-2 w-10 h-10 mt-4"
-				>
-					<Tooltip content="Create board" defaultOpen placement="top-end">
+				<Tooltip content="Create board" placement="top-end">
+					<button
+						onClick={() => setAddNewColumn(true)}
+						className="bg-thirdColor text-forthColor rounded-md hover:bg-primaryColor  transition-colors items-center justify-center flex p-2 w-10 h-10 mt-4"
+					>
 						<FontAwesomeIcon icon={faPlus} className="h-4 w-4 p-2" />
-					</Tooltip>
-				</button>
+					</button>
+				</Tooltip>
 			)}
 			{addNewColumn && (
 				<form onSubmit={handleNewColumn} className="max-w-xs">

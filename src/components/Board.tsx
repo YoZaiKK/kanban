@@ -68,19 +68,24 @@ export function Board({ id, name }: { id: string; name: string }) {
 							<div className="flex gap-2 justify-between items-center mb-4 px-12">
 								<div className="">
 									{!renameMode && (
-										<h1
-											className="text-lg text-gray-400"
-											onClick={() => setRenameMode(true)}
-										>
-											Board:
-											<div
-												className="flex text-3xl font-bold gap-2 text-black capitalize items-center hover:bg-defaultBG hover:drop-shadow-md p-3 rounded-md
-											transition-colors duration-400 ease-in-out"
+										<Tooltip content="Rename Board" placement="bottom">
+											<h1
+												className="text-lg text-gray-400"
+												onClick={() => setRenameMode(true)}
 											>
-												{name}
-												<FontAwesomeIcon className="h-4" icon={faPenToSquare} />
-											</div>
-										</h1>
+												Board:
+												<div
+													className="flex text-3xl font-bold gap-2 text-black capitalize items-center hover:bg-defaultBG hover:drop-shadow-lg p-3 rounded-md
+												transition-colors duration-400 ease-in-out"
+												>
+													{name}
+													<FontAwesomeIcon
+														className="h-4"
+														icon={faPenToSquare}
+													/>
+												</div>
+											</h1>
+										</Tooltip>
 									)}
 									{renameMode && (
 										<form onSubmit={handleNameSubmit}>

@@ -3,6 +3,7 @@ import { type Column, useStorage, useMutation } from "@/app/liveblocks.config";
 import { Column as BoardColumn, NewColumnForm } from "@/components/";
 import { LiveList, LiveObject, shallow } from "@liveblocks/client";
 import { ReactSortable } from "react-sortablejs";
+import { GenerateTemplate } from "./GenerateTemplate";
 
 export const Columns = ({ filterActive }: { filterActive: boolean }) => {
 	const columns = useStorage(
@@ -27,7 +28,7 @@ export const Columns = ({ filterActive }: { filterActive: boolean }) => {
 		updateColumn(newColumns);
 	}
 
-	if (!columns) return null;
+	if (!columns) return <div>Loading...</div>;
 	return (
 		<div className="flex gap-4 px-12">
 			<ReactSortable
@@ -47,6 +48,7 @@ export const Columns = ({ filterActive }: { filterActive: boolean }) => {
 						/>
 					))}
 			</ReactSortable>
+			{!columns.length && <GenerateTemplate />}
 			<NewColumnForm />
 		</div>
 	);

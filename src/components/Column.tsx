@@ -93,24 +93,51 @@ export function Column({ column, filterActive }: Props) {
 		return columnCards?.filter((card) => card.assignedTo === email);
 	}
 
+	function getChipColor():
+		| "warning"
+		| "danger"
+		| "default"
+		| "primary"
+		| "secondary"
+		| "success"
+		| undefined {
+		const cards = filterCards();
+
+		if (!cards) {
+			return undefined;
+		}
+
+		const percentage = cards.length / limitPerUser;
+
+		if (percentage <= 0.5) {
+			return "success";
+		} else if (percentage > 0.5 && percentage < 0.8) {
+			return "warning";
+		} else {
+			return "danger";
+		}
+	}
+
 	if (filterActive) {
 		return (
 			<div className="w-70 bg-transparent hover:shadow-md rounded-md p-2">
-				<div className="flex pl-4 justify-between font-bold capitalize bg-white p-2 rounded-md place-items-center">
-					<h3>{name}</h3>
-					<Chip variant="bordered">
-						{filterCards()?.length}/{limitPerUser}
-					</Chip>
-					<button
-						onClick={() => setRenameMode(true)}
-						className="text-gray-300 hover:text-gray-600"
-					>
-						<FontAwesomeIcon
-							className="p-3 rounded-md bg-defaultBG text-black hover:shadow-inner  transition-colors duration-200 ease-in-out shadow-md "
-							icon={faEllipsis}
-						/>
-					</button>
-				</div>
+				{!renameMode && (
+					<div className="flex pl-4 justify-between font-bold capitalize bg-white p-2 rounded-md place-items-center gap-3">
+						<h3>{name}</h3>
+						<Chip variant="bordered" color={getChipColor()}>
+							{filterCards()?.length}/{limitPerUser}
+						</Chip>
+						<button
+							onClick={() => setRenameMode(true)}
+							className="text-gray-300 hover:text-gray-600"
+						>
+							<FontAwesomeIcon
+								className="p-3 rounded-md bg-defaultBG text-black hover:shadow-inner  transition-colors duration-200 ease-in-out shadow-md "
+								icon={faEllipsis}
+							/>
+						</button>
+					</div>
+				)}
 				{renameMode && (
 					<div className="mb-8">
 						Edit name:
@@ -137,24 +164,6 @@ export function Column({ column, filterActive }: Props) {
 				{filterCards()?.map((card) => (
 					<ColumnCard key={card.id} {...card} />
 				))}
-				{!createCardMode && !renameMode && (
-					<button
-						onClick={() => setCreateCardMode(true)}
-						className="bg-forthColor text-primaryColor font-bold p-2 rounded-md w-full mt-2 gap-2 flex pl-5 items-center hover:bg-primaryColor hover:text-forthColor transition-colors duration-200 ease-in-out shadow-md hover:shadow-lg"
-					>
-						<FontAwesomeIcon icon={faPlus} />
-						Create card
-					</button>
-				)}
-				{createCardMode && (
-					<>
-						<NewCardForm
-							columnId={id}
-							changeCreateMode={() => setCreateCardMode(false)}
-						/>
-						<CancelButton onClick={() => setCreateCardMode(false)} />
-					</>
-				)}
 			</div>
 		);
 	}
@@ -162,9 +171,9 @@ export function Column({ column, filterActive }: Props) {
 	return (
 		<div className="w-70 bg-transparent hover:shadow-md rounded-md p-2">
 			{!renameMode && (
-				<div className="flex pl-4 justify-between font-bold capitalize bg-white p-2 rounded-md place-items-center">
+				<div className="flex pl-4 justify-between font-bold capitalize bg-white p-2 rounded-md place-items-center gap-3">
 					<h3>{name}</h3>
-					<Chip variant="bordered">
+					<Chip variant="bordered" color={getChipColor()}>
 						{filterCards()?.length}/{limitPerUser}
 					</Chip>
 					<button
@@ -214,7 +223,6 @@ export function Column({ column, filterActive }: Props) {
 					))}
 				</ReactSortable>
 			)}
-			{/* {!renameMode && <NewCardForm columnId={id} />} */}
 			{!createCardMode && !renameMode && (
 				<button
 					onClick={() => setCreateCardMode(true)}

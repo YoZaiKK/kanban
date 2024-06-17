@@ -16,17 +16,17 @@ export default async function Header() {
 
 	return (
 		<header className=" p-4 px-8 shadow-lg ">
-			<div className="flex justify-between items-center">
+			<div className="flex justify-between items-center ">
 				<span className="flex gap-2 items-center">
-					<MainMenu />
-					<NotificationsBox />
+					<MainMenu loggedIn={!!session} />
+					{session && <NotificationsBox />}
 					<Tooltip content="Click to go HomePage">
 						<Link
 							href="/"
 							className="border-1 flex gap-2 items-center p-2 hover:bg-gray-700 hover:text-white transition-colors duration-300 ease-in-out rounded-md shadow-md"
 						>
 							2024-A072
-							<FontAwesomeIcon icon={faHome} />
+							<FontAwesomeIcon icon={faHome} className="  " />
 						</Link>
 					</Tooltip>
 				</span>
