@@ -892,6 +892,19 @@
     "@react-aria/utils" "3.24.1"
     "@react-types/progress" "3.5.2"
 
+"@nextui-org/progress@^2.0.31":
+  version "2.0.31"
+  resolved "https://registry.yarnpkg.com/@nextui-org/progress/-/progress-2.0.31.tgz#b70c9c586dc5dff8b22ff761fc27a9049105ce1a"
+  integrity sha512-ZFjV4068gYPe9S4R1e/8oqwtPFKd9ag8RB0JoToq55AM5aLItOA/Q/uwBnDz7ait3C7viWawcN4leW1C8dSurQ==
+  dependencies:
+    "@nextui-org/react-utils" "2.0.14"
+    "@nextui-org/shared-utils" "2.0.5"
+    "@nextui-org/use-is-mounted" "2.0.5"
+    "@react-aria/i18n" "3.11.1"
+    "@react-aria/progress" "3.4.13"
+    "@react-aria/utils" "3.24.1"
+    "@react-types/progress" "3.5.4"
+
 "@nextui-org/radio@2.1.1":
   version "2.1.1"
   resolved "https://registry.yarnpkg.com/@nextui-org/radio/-/radio-2.1.1.tgz#7fc8d0f66b3a423cdff402e6db145e22076ad1dd"
@@ -1058,6 +1071,22 @@
     "@react-aria/visually-hidden" "3.8.10"
     "@react-stately/slider" "3.5.2"
 
+"@nextui-org/slider@^2.2.12":
+  version "2.2.12"
+  resolved "https://registry.yarnpkg.com/@nextui-org/slider/-/slider-2.2.12.tgz#a9293980c42c21b07d4538531f3491700517555c"
+  integrity sha512-5+72YlWxV6bm9hGNpWN5G+6OeqU7S9N2ECwEdO4COQ1hvMiimiJ3lrTUHIS2AvKimEpw+MLkUoKIbqAV23zxuw==
+  dependencies:
+    "@nextui-org/react-utils" "2.0.14"
+    "@nextui-org/shared-utils" "2.0.5"
+    "@nextui-org/tooltip" "2.0.36"
+    "@react-aria/focus" "3.17.1"
+    "@react-aria/i18n" "3.11.1"
+    "@react-aria/interactions" "3.21.3"
+    "@react-aria/slider" "3.7.8"
+    "@react-aria/utils" "3.24.1"
+    "@react-aria/visually-hidden" "3.8.12"
+    "@react-stately/slider" "3.5.4"
+
 "@nextui-org/snippet@2.0.37":
   version "2.0.37"
   resolved "https://registry.yarnpkg.com/@nextui-org/snippet/-/snippet-2.0.37.tgz#28d0ad82f71d2d2c306fe52314b14f5305538a94"
@@ -1214,6 +1243,24 @@
     "@react-stately/tooltip" "3.4.7"
     "@react-types/overlays" "3.8.5"
     "@react-types/tooltip" "3.4.7"
+
+"@nextui-org/tooltip@2.0.36":
+  version "2.0.36"
+  resolved "https://registry.yarnpkg.com/@nextui-org/tooltip/-/tooltip-2.0.36.tgz#59ca20f60f7e8268659e1ee3a9b7a7ff25ef971e"
+  integrity sha512-tV3BefTvmYzSC4TX+UPV7p3F5fs52sFzQ1/Try/Bkz5B1F9yXviO9dV2/pqXSfOJVvLVJS2RMi5wZkaYh1xtNw==
+  dependencies:
+    "@nextui-org/aria-utils" "2.0.21"
+    "@nextui-org/framer-utils" "2.0.21"
+    "@nextui-org/react-utils" "2.0.14"
+    "@nextui-org/shared-utils" "2.0.5"
+    "@nextui-org/use-safe-layout-effect" "2.0.5"
+    "@react-aria/interactions" "3.21.3"
+    "@react-aria/overlays" "3.22.1"
+    "@react-aria/tooltip" "3.7.4"
+    "@react-aria/utils" "3.24.1"
+    "@react-stately/tooltip" "3.4.9"
+    "@react-types/overlays" "3.8.7"
+    "@react-types/tooltip" "3.4.9"
 
 "@nextui-org/use-aria-accordion@2.0.5":
   version "2.0.5"
@@ -2133,6 +2180,18 @@
     "@react-types/shared" "^3.22.1"
     "@swc/helpers" "^0.5.0"
 
+"@react-aria/progress@3.4.13":
+  version "3.4.13"
+  resolved "https://registry.yarnpkg.com/@react-aria/progress/-/progress-3.4.13.tgz#dc86c98ed0f9a164cf62140e13865235c1991548"
+  integrity sha512-YBV9bOO5JzKvG8QCI0IAA00o6FczMgIDiK8Q9p5gKorFMatFUdRayxlbIPoYHMi+PguLil0jHgC7eOyaUcrZ0g==
+  dependencies:
+    "@react-aria/i18n" "^3.11.1"
+    "@react-aria/label" "^3.7.8"
+    "@react-aria/utils" "^3.24.1"
+    "@react-types/progress" "^3.5.4"
+    "@react-types/shared" "^3.23.1"
+    "@swc/helpers" "^0.5.0"
+
 "@react-aria/radio@3.10.2":
   version "3.10.2"
   resolved "https://registry.yarnpkg.com/@react-aria/radio/-/radio-3.10.2.tgz#075a41ef462c0c0403cb97eff9a4b5205f9b666e"
@@ -2188,6 +2247,21 @@
     "@react-stately/slider" "^3.5.2"
     "@react-types/shared" "^3.22.1"
     "@react-types/slider" "^3.7.1"
+    "@swc/helpers" "^0.5.0"
+
+"@react-aria/slider@3.7.8":
+  version "3.7.8"
+  resolved "https://registry.yarnpkg.com/@react-aria/slider/-/slider-3.7.8.tgz#6f2109527e0ebfaa1aaf46fce2460549d5550e1b"
+  integrity sha512-MYvPcM0K8jxEJJicUK2+WxUkBIM/mquBxOTOSSIL3CszA80nXIGVnLlCUnQV3LOUzpWtabbWaZokSPtGgOgQOw==
+  dependencies:
+    "@react-aria/focus" "^3.17.1"
+    "@react-aria/i18n" "^3.11.1"
+    "@react-aria/interactions" "^3.21.3"
+    "@react-aria/label" "^3.7.8"
+    "@react-aria/utils" "^3.24.1"
+    "@react-stately/slider" "^3.5.4"
+    "@react-types/shared" "^3.23.1"
+    "@react-types/slider" "^3.7.3"
     "@swc/helpers" "^0.5.0"
 
 "@react-aria/spinbutton@^3.6.3":
@@ -2310,6 +2384,19 @@
     "@react-types/tooltip" "^3.4.7"
     "@swc/helpers" "^0.5.0"
 
+"@react-aria/tooltip@3.7.4":
+  version "3.7.4"
+  resolved "https://registry.yarnpkg.com/@react-aria/tooltip/-/tooltip-3.7.4.tgz#0efe8b4cc543a39395e99861ad6f0c64cd746026"
+  integrity sha512-+XRx4HlLYqWY3fB8Z60bQi/rbWDIGlFUtXYbtoa1J+EyRWfhpvsYImP8qeeNO/vgjUtDy1j9oKa8p6App9mBMQ==
+  dependencies:
+    "@react-aria/focus" "^3.17.1"
+    "@react-aria/interactions" "^3.21.3"
+    "@react-aria/utils" "^3.24.1"
+    "@react-stately/tooltip" "^3.4.9"
+    "@react-types/shared" "^3.23.1"
+    "@react-types/tooltip" "^3.4.9"
+    "@swc/helpers" "^0.5.0"
+
 "@react-aria/utils@3.23.2":
   version "3.23.2"
   resolved "https://registry.yarnpkg.com/@react-aria/utils/-/utils-3.23.2.tgz#23fd55b165a799ecf72c1c66508574f67de20162"
@@ -2342,7 +2429,7 @@
     "@react-types/shared" "^3.22.1"
     "@swc/helpers" "^0.5.0"
 
-"@react-aria/visually-hidden@^3.8.10", "@react-aria/visually-hidden@^3.8.12":
+"@react-aria/visually-hidden@3.8.12", "@react-aria/visually-hidden@^3.8.10", "@react-aria/visually-hidden@^3.8.12":
   version "3.8.12"
   resolved "https://registry.yarnpkg.com/@react-aria/visually-hidden/-/visually-hidden-3.8.12.tgz#89388b4773b8fbea4b5f9682e807510c14218c93"
   integrity sha512-Bawm+2Cmw3Xrlr7ARzl2RLtKh0lNUdJ0eNqzWcyx4c0VHUAWtThmH5l+HRqFUGzzutFZVo89SAy40BAbd0gjVw==
@@ -2618,7 +2705,7 @@
     "@react-types/slider" "^3.7.1"
     "@swc/helpers" "^0.5.0"
 
-"@react-stately/slider@^3.5.2":
+"@react-stately/slider@3.5.4", "@react-stately/slider@^3.5.2", "@react-stately/slider@^3.5.4":
   version "3.5.4"
   resolved "https://registry.yarnpkg.com/@react-stately/slider/-/slider-3.5.4.tgz#f8c1b5133769380348fa1e8a7a513ebbd88a8355"
   integrity sha512-Jsf7K17dr93lkNKL9ij8HUcoM1sPbq8TvmibD6DhrK9If2lje+OOL8y4n4qreUnfMT56HCAeS9wCO3fg3eMyrw==
@@ -2705,7 +2792,7 @@
     "@react-types/tooltip" "^3.4.7"
     "@swc/helpers" "^0.5.0"
 
-"@react-stately/tooltip@^3.4.7":
+"@react-stately/tooltip@3.4.9", "@react-stately/tooltip@^3.4.7", "@react-stately/tooltip@^3.4.9":
   version "3.4.9"
   resolved "https://registry.yarnpkg.com/@react-stately/tooltip/-/tooltip-3.4.9.tgz#a6161db77bd5ad606caa1a302622f92bc381b4ac"
   integrity sha512-P7CDJsdoKarz32qFwf3VNS01lyC+63gXpDZG31pUu+EO5BeQd4WKN/AH1Beuswpr4GWzxzFc1aXQgERFGVzraA==
@@ -2956,7 +3043,7 @@
   dependencies:
     "@react-types/shared" "^3.22.1"
 
-"@react-types/progress@^3.5.2":
+"@react-types/progress@3.5.4", "@react-types/progress@^3.5.2", "@react-types/progress@^3.5.4":
   version "3.5.4"
   resolved "https://registry.yarnpkg.com/@react-types/progress/-/progress-3.5.4.tgz#22032aa0a64a3ff99fcd6e6e4f22cbc09c9725f3"
   integrity sha512-JNc246sTjasPyx5Dp7/s0rp3Bz4qlu4LrZTulZlxWyb53WgBNL7axc26CCi+I20rWL9+c7JjhrRxnLl/1cLN5g==
@@ -3067,7 +3154,7 @@
     "@react-types/overlays" "^3.8.5"
     "@react-types/shared" "^3.22.1"
 
-"@react-types/tooltip@^3.4.7", "@react-types/tooltip@^3.4.9":
+"@react-types/tooltip@3.4.9", "@react-types/tooltip@^3.4.7", "@react-types/tooltip@^3.4.9":
   version "3.4.9"
   resolved "https://registry.yarnpkg.com/@react-types/tooltip/-/tooltip-3.4.9.tgz#fb2291bd0b915f7c7f5024ce146412405843ec9b"
   integrity sha512-wZ+uF1+Zc43qG+cOJzioBmLUNjRa7ApdcT0LI1VvaYvH5GdfjzUJOorLX9V/vAci0XMJ50UZ+qsh79aUlw2yqg==

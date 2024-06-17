@@ -3,15 +3,8 @@
 import { useParams, useRouter } from "next/navigation";
 import "@liveblocks/react-comments/styles.css";
 import { CardModalBody } from "../CardModalBody";
-import { useEffect, useState } from "react";
-import { useRoom, useUpdateMyPresence } from "@/app/liveblocks.config";
-import { liveblocksClient } from "@/lib/liveblocksClient";
-
-const usuarios = [
-	"example@example.com",
-	"email@example.com",
-	"emaiiiil@example.com",
-];
+import { useEffect } from "react";
+import { useUpdateMyPresence } from "@/app/liveblocks.config";
 
 export const CardModal = () => {
 	const router = useRouter();

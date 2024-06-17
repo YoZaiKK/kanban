@@ -9,6 +9,7 @@ import {
 	useStorage,
 	useThreads,
 	useRoom,
+	useSelf,
 } from "@/app/liveblocks.config";
 import { shallow } from "@liveblocks/core";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -23,15 +24,20 @@ import {
 import "@liveblocks/react-comments/styles.css";
 import { liveblocksClient } from "@/lib/liveblocksClient";
 import { Select, SelectItem } from "@nextui-org/select";
+import { Progress, Slider } from "@nextui-org/react";
 
 export const CardModalBody = () => {
+	const [value, setValue] = useState(0);
 	const [assignedTo, setAssignedTo] = useState("");
 	const [users, setUsers] = useState<string[]>([]);
-	const { id } = useRoom();
+	const [editMode, setEditMode] = useState(false);
+	const { setOpenCard } = useContext<BoardContextProps>(BoardContext);
+	const roomInfo = useRoom();
+	const me = useSelf((me) => me.info);
+	const { id } = roomInfo;
 	const router = useRouter();
 	const params = useParams();
-	const { setOpenCard } = useContext<BoardContextProps>(BoardContext);
-	const [editMode, setEditMode] = useState(false);
+
 	const { threads } = useThreads({
 		query: {
 			metadata: {
@@ -73,6 +79,7 @@ export const CardModalBody = () => {
 		}
 		getUsers();
 		setAssignedTo(card?.assignedTo || "");
+		setValue(card?.percentComplete || 0);
 	}, [params]);
 
 	function handleDelete() {
@@ -87,7 +94,11 @@ export const CardModalBody = () => {
 		const input = (ev.target as HTMLFormElement).querySelector("input");
 		if (!input) return;
 		const newName = input.value;
-		updateCard(params.cardId, { name: newName, assignedTo });
+		updateCard(params.cardId, {
+			name: newName,
+			assignedTo,
+			percentComplete: value,
+		});
 		setEditMode(false);
 	}
 	const handleSelectionChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
@@ -119,10 +130,12 @@ export const CardModalBody = () => {
 			{editMode && (
 				<div>
 					<form action="" onSubmit={handleNameChange}>
+						<span className="mt-2">Title of this card:</span>
 						<input type="text" defaultValue={card?.name} className="mb-2" />
+						<span className="mt-2">Assigned to this card:</span>
 						<Select
 							label="Select an user"
-							className="block"
+							className="block mb-2"
 							onChange={handleSelectionChange}
 							value={card?.assignedTo}
 						>
@@ -132,6 +145,25 @@ export const CardModalBody = () => {
 								</SelectItem>
 							))}
 						</Select>
+
+						{me?.email === card?.assignedTo && (
+							<>
+								<span className="mt-2">Percent of completion</span>
+								<Slider
+									aria-label="Volume"
+									size="lg"
+									color="success"
+									step={1}
+									maxValue={100}
+									minValue={0}
+									value={value}
+									onChange={setValue as (value: number | number[]) => void}
+									className="max-w-md"
+									showTooltip={true}
+									// formatOptions={{ style: "percent" }}
+								/>
+							</>
+						)}
 						<button
 							type="submit"
 							className="w-full mt-2
@@ -155,6 +187,14 @@ export const CardModalBody = () => {
 						Description
 					</h2>
 					<CardDescription />
+					<Progress
+						aria-label="Downloading..."
+						size="md"
+						value={value}
+						color="success"
+						showValueLabel={true}
+						className="max-w-md"
+					/>
 					<h2 className="flex gap-2 items-center mt-4">
 						<FontAwesomeIcon icon={faComments} />
 						Comments

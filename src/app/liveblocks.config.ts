@@ -39,6 +39,7 @@ export type Card = {
   author: string;
   assignedTo: string;
   columnId: string;
+  percentComplete: number;
 }
 
 type Storage = {

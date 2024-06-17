@@ -1,14 +1,7 @@
 "use client";
 
 import { RoomProvider } from "@/app/liveblocks.config";
-import {
-	faArrowRight,
-	faClose,
-	faCross,
-	faEye,
-	faGear,
-	faTrash,
-} from "@fortawesome/free-solid-svg-icons";
+import { faArrowRight, faGear } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { Card, CardHeader, CardBody, CardFooter } from "@nextui-org/card";
 import { Chip } from "@nextui-org/chip";
@@ -17,12 +10,9 @@ import { PresenceAvatars } from "./PresenceAvatars";
 import { RoomInfo } from "@liveblocks/node";
 import { useRouter } from "next/navigation";
 import { deleteBoard } from "@/app/actions/boardActions";
-// import { BoardDeleteButton } from "./BoardDeleteButton";
-import { useState } from "react";
 import { DeleteWithConfirmation } from "./DeleteWithConfirmation";
 
 export const BoardCard = ({ board }: { board: RoomInfo }) => {
-	const [editDeleteMode, setEditDeleteMode] = useState(false);
 	const router = useRouter();
 	async function handleDeleteBoard(boardId: string) {
 		await deleteBoard(boardId);

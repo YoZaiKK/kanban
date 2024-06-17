@@ -46,6 +46,7 @@ export const NewCardForm = ({
 					author: userInfo?.email.toString() || "",
 					assignedTo: assignedTo,
 					columnId: columnId,
+					percentComplete: 0,
 				})
 			);
 		},
