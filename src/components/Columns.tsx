@@ -30,7 +30,7 @@ export const Columns = ({ filterActive }: { filterActive: boolean }) => {
 
 	if (!columns) return <div>Loading...</div>;
 	return (
-		<div className="flex gap-4 px-12">
+		<div className="flex gap-4 px-12 overflow-x-scroll max-h-100">
 			<ReactSortable
 				group={"board-column"}
 				list={columns}

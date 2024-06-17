@@ -16,6 +16,7 @@ import { faEllipsis, faPlus, faTrash } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { shallow } from "@liveblocks/client";
 import { Chip } from "@nextui-org/chip";
+import { Tooltip } from "@nextui-org/tooltip";
 import { FormEvent, useState } from "react";
 import { ReactSortable } from "react-sortablejs";
 
@@ -25,6 +26,7 @@ type Props = {
 };
 
 export function Column({ column, filterActive }: Props) {
+	const [inputValue, setInputValue] = useState("");
 	const { id, name, limitPerUser } = column;
 	const [renameMode, setRenameMode] = useState(false);
 	const [createCardMode, setCreateCardMode] = useState(false);
@@ -124,9 +126,11 @@ export function Column({ column, filterActive }: Props) {
 				{!renameMode && (
 					<div className="flex pl-4 justify-between font-bold capitalize bg-white p-2 rounded-md place-items-center gap-3">
 						<h3>{name}</h3>
-						<Chip variant="bordered" color={getChipColor()}>
-							{filterCards()?.length}/{limitPerUser}
-						</Chip>
+						<Tooltip content="Only counting cards assigned to you">
+							<Chip variant="bordered" color={getChipColor()}>
+								{filterCards()?.length}/{limitPerUser}
+							</Chip>
+						</Tooltip>
 						<button
 							onClick={() => setRenameMode(true)}
 							className="text-gray-300 hover:text-gray-600"
@@ -139,14 +143,22 @@ export function Column({ column, filterActive }: Props) {
 					</div>
 				)}
 				{renameMode && (
-					<div className="mb-8">
+					<div className="mb-8 min-w-64">
 						Edit name:
 						<form onSubmit={handleRenameSubmit} className="mb-2">
-							<input type="text" defaultValue={name} />
+							<input
+								type="text"
+								defaultValue={name}
+								onChange={(e) => setInputValue(e.target.value)}
+							/>
 							<button
 								type="submit"
-								className="w-full mt-2
-				bg-thirdColor text-white p-2 rounded-md hover:bg-primaryColor duration-300 hover:shadow-lg"
+								className={
+									inputValue === ""
+										? "bg-gray-300 text-gray-600 rounded-md p-2 w-full mt-2 px-3"
+										: "w-full mt-2 bg-thirdColor text-white p-2 rounded-md hover:bg-primaryColor duration-300 hover:shadow-lg"
+								}
+								disabled={inputValue === ""}
 							>
 								Save
 							</button>
@@ -173,9 +185,11 @@ export function Column({ column, filterActive }: Props) {
 			{!renameMode && (
 				<div className="flex pl-4 justify-between font-bold capitalize bg-white p-2 rounded-md place-items-center gap-3">
 					<h3>{name}</h3>
-					<Chip variant="bordered" color={getChipColor()}>
-						{filterCards()?.length}/{limitPerUser}
-					</Chip>
+					<Tooltip content="Only counting cards assigned to you">
+						<Chip variant="bordered" color={getChipColor()}>
+							{filterCards()?.length}/{limitPerUser}
+						</Chip>
+					</Tooltip>
 					<button
 						onClick={() => setRenameMode(true)}
 						className="text-gray-300 hover:text-gray-600"
@@ -188,14 +202,22 @@ export function Column({ column, filterActive }: Props) {
 				</div>
 			)}
 			{renameMode && (
-				<div className="mb-8">
+				<div className="mb-8 min-w-64">
 					Edit name:
 					<form onSubmit={handleRenameSubmit} className="mb-2">
-						<input type="text" defaultValue={name} />
+						<input
+							type="text"
+							defaultValue={name}
+							onChange={(e) => setInputValue(e.target.value)}
+						/>
 						<button
 							type="submit"
-							className="w-full mt-2
-				bg-thirdColor text-white p-2 rounded-md hover:bg-primaryColor duration-300 hover:shadow-lg"
+							className={
+								inputValue === ""
+									? "bg-gray-300 text-gray-600 rounded-md p-2 w-full mt-2 px-3"
+									: "w-full mt-2 bg-thirdColor text-white p-2 rounded-md hover:bg-primaryColor duration-300 hover:shadow-lg"
+							}
+							disabled={inputValue === ""}
 						>
 							Save
 						</button>

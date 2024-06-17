@@ -8,6 +8,7 @@ import {
 	useMutation,
 	useStorage,
 	useThreads,
+	useRoom,
 } from "@/app/liveblocks.config";
 import { shallow } from "@liveblocks/core";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -20,8 +21,13 @@ import {
 	DeleteWithConfirmation,
 } from "@/components";
 import "@liveblocks/react-comments/styles.css";
+import { liveblocksClient } from "@/lib/liveblocksClient";
+import { Select, SelectItem } from "@nextui-org/select";
 
 export const CardModalBody = () => {
+	const [assignedTo, setAssignedTo] = useState("");
+	const [users, setUsers] = useState<string[]>([]);
+	const { id } = useRoom();
 	const router = useRouter();
 	const params = useParams();
 	const { setOpenCard } = useContext<BoardContextProps>(BoardContext);
@@ -59,6 +65,14 @@ export const CardModalBody = () => {
 		if (params.cardId && setOpenCard) {
 			setOpenCard(params.cardId.toString());
 		}
+		async function getUsers() {
+			const boardInfo = await liveblocksClient.getRoom(id);
+			const usersAccesses = boardInfo.usersAccesses;
+			setUsers(Object.keys(usersAccesses));
+			console.log(users);
+		}
+		getUsers();
+		setAssignedTo(card?.assignedTo || "");
 	}, [params]);
 
 	function handleDelete() {
@@ -73,30 +87,51 @@ export const CardModalBody = () => {
 		const input = (ev.target as HTMLFormElement).querySelector("input");
 		if (!input) return;
 		const newName = input.value;
-		updateCard(params.cardId, { name: newName });
+		updateCard(params.cardId, { name: newName, assignedTo });
 		setEditMode(false);
 	}
+	const handleSelectionChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
+		setAssignedTo(e.target.value);
+	};
 
 	return (
 		<>
 			{!editMode && (
-				<div className="flex justify-between">
-					<h4 className="text-2xl">{card?.name}</h4>
-					<button
-						className=" text-gray-300 hover:text-gray-600"
-						onClick={() => setEditMode(true)}
-					>
-						<FontAwesomeIcon
-							icon={faEllipsis}
-							className="p-3 rounded-md bg-defaultBG text-black hover:shadow-inner  transition-colors duration-200 ease-in-out shadow-md "
-						/>
-					</button>
+				<div>
+					<div className="flex justify-between">
+						<h4 className="text-2xl capitalize">{card?.name}</h4>
+						<button
+							className=" text-gray-300 hover:text-gray-600"
+							onClick={() => setEditMode(true)}
+						>
+							<FontAwesomeIcon
+								icon={faEllipsis}
+								className="p-3 rounded-md bg-defaultBG text-black hover:shadow-inner  transition-colors duration-200 ease-in-out shadow-md "
+							/>
+						</button>
+					</div>
+					<div className="rounded-md text-gray-500 pl-2 ">
+						Assigned to:
+						<span className="font-bold text-black">{card?.assignedTo}</span>
+					</div>
 				</div>
 			)}
 			{editMode && (
 				<div>
 					<form action="" onSubmit={handleNameChange}>
 						<input type="text" defaultValue={card?.name} className="mb-2" />
+						<Select
+							label="Select an user"
+							className="block"
+							onChange={handleSelectionChange}
+							value={card?.assignedTo}
+						>
+							{users.map((user) => (
+								<SelectItem key={user} value={user}>
+									{user}
+								</SelectItem>
+							))}
+						</Select>
 						<button
 							type="submit"
 							className="w-full mt-2
@@ -105,10 +140,12 @@ export const CardModalBody = () => {
 							Save
 						</button>
 					</form>
-					<div className="mt-2">
+					<div className="mt-2 h-10">
 						<DeleteWithConfirmation onDelete={() => handleDelete()} />
 					</div>
-					<CancelButton onClick={() => setEditMode(false)} />
+					<div className="h-10">
+						<CancelButton onClick={() => setEditMode(false)} />
+					</div>
 				</div>
 			)}
 			{!editMode && (

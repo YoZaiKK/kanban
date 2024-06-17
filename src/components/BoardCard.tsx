@@ -106,7 +106,11 @@ export const BoardCard = ({ board }: { board: RoomInfo }) => {
 						<FontAwesomeIcon icon={faGear} className="h-5 w-5" />
 					</Button>
 				</Tooltip>
-				<DeleteWithConfirmation onDelete={() => handleDeleteBoard(board.id)} />
+				<div className="rounded-md w-full h-full ">
+					<DeleteWithConfirmation
+						onDelete={() => handleDeleteBoard(board.id)}
+					/>
+				</div>
 			</div>
 		</div>
 	);

@@ -2,6 +2,7 @@
 
 import { faArrowLeft, faTrash } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { Button } from "@nextui-org/react";
 import { Tooltip } from "@nextui-org/tooltip";
 import { useState } from "react";
 
@@ -40,12 +41,12 @@ export const DeleteWithConfirmation = ({ onDelete }: Props) => {
 	}
 	return (
 		<Tooltip content="Delete this board" placement="top">
-			<button
+			<Button
 				onClick={() => setWannaDelete(true)}
-				className="bg-red-500 text-white w-full h-full justify-center items-center flex gap-2 rounded-md hover:bg-red-800 duration-300 hover:shadow-lg"
+				className="bg-red-500 text-white w-full h-full  justify-center items-center flex rounded-md hover:bg-red-800 duration-300 hover:shadow-lg"
 			>
 				<FontAwesomeIcon icon={faTrash} className="h-5 w-5" />
-			</button>
+			</Button>
 		</Tooltip>
 	);
 };

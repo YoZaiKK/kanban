@@ -14,12 +14,6 @@ import { Select, SelectItem } from "@nextui-org/select";
 import { FormEvent, useEffect, useState } from "react";
 import uniqid from "uniqid";
 
-const usuarios = [
-	"example@example.com",
-	"email@example.com",
-	"emaiiiil@example.com",
-];
-
 export const NewCardForm = ({
 	columnId,
 	changeCreateMode,
@@ -40,7 +34,6 @@ export const NewCardForm = ({
 			setUsers(Object.keys(usersAccesses));
 		}
 		getUsers();
-		console.log({ users });
 	}, []);
 
 	const addCard = useMutation(

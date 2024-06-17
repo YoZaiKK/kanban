@@ -60,7 +60,7 @@ export function NewColumnForm() {
 						<div className="flex gap-2">
 							<input
 								type="text"
-								className="w-full h-auto border border-gray-300 rounded-md p-2 focus:outline-none focus:border-primaryColor transition-colors"
+								className="w-full min-w-36 h-auto border border-gray-300 rounded-md p-2 focus:outline-none focus:border-primaryColor transition-colors"
 								placeholder="new column name"
 								value={inputValue}
 								onChange={(e) => setInputValue(e.target.value)}
